@@ -56,6 +56,7 @@ export const ownerProjects: Project[] = [
       ['admin-fees', 'Admin: fees and limits'],
       ['admin-admins', 'Admin: manage admins'],
     ]),
+    liveUrl: 'https://trancash.vercel.app',
     sourceIsPrivate: true,
     featured: true,
   },
