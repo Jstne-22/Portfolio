@@ -1,21 +1,20 @@
 /* ---------- Design tokens ---------- */
 :root {
-  --bg-main: #050510;
-  --bg-secondary: #0a0a1a;
-  --bg-card: #0d1022;
-  --neon-purple: #8b5cf6;
-  --neon-pink: #ff2d95;
-  --electric-blue: #00cfff;
-  --text-primary: #f5f5ff;
-  --text-secondary: #a5a7c5;
+  --bg-main: #000000;
+  --bg-secondary: #0a0a0a;
+  --bg-card: #111111;
+  --accent: #ffffff;
+  --accent-muted: #a3a3a3;
+  --accent-soft: #d4d4d4;
+  --text-primary: #f5f5f5;
+  --text-secondary: #a3a3a3;
 
-  --gradient-neon: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-purple) 55%, var(--electric-blue) 100%);
-  --glass-bg: rgba(13, 16, 34, 0.62);
-  --glass-border: rgba(139, 92, 246, 0.22);
-  --glass-border-strong: rgba(139, 92, 246, 0.45);
-  --glow-pink: 0 0 18px rgba(255, 45, 149, 0.35);
-  --glow-purple: 0 0 22px rgba(139, 92, 246, 0.35);
-  --glow-blue: 0 0 18px rgba(0, 207, 255, 0.35);
+  --glass-bg: rgba(17, 17, 17, 0.62);
+  --glass-border: rgba(212, 212, 212, 0.22);
+  --glass-border-strong: rgba(212, 212, 212, 0.45);
+  --glow: 0 0 18px rgba(255, 255, 255, 0.35);
+  --glow-muted: 0 0 22px rgba(212, 212, 212, 0.35);
+  --glow-soft: 0 0 18px rgba(255, 255, 255, 0.35);
 
   --radius-sm: 10px;
   --radius-md: 14px;
@@ -91,7 +90,7 @@ textarea {
 }
 
 :focus-visible {
-  outline: 2px solid var(--electric-blue);
+  outline: 2px solid var(--accent-soft);
   outline-offset: 3px;
   border-radius: 6px;
 }
@@ -104,7 +103,7 @@ textarea {
   padding: 10px 16px;
   border-radius: var(--radius-sm);
   background: var(--bg-card);
-  border: 1px solid var(--neon-pink);
+  border: 1px solid var(--accent);
   transform: translateY(-200%);
   transition: transform 0.2s ease;
 }
@@ -133,7 +132,7 @@ textarea {
   place-items: center;
   width: 64px;
   height: 72px;
-  filter: drop-shadow(0 0 10px rgba(255, 45, 149, 0.45));
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.45));
 }
 
 .logo__hex-svg {
@@ -147,10 +146,7 @@ textarea {
   position: relative;
   font-size: 2rem;
   font-weight: 800;
-  background: linear-gradient(180deg, #ff6bb5, var(--neon-pink));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--accent);
 }
 
 .logo__wordmark {
@@ -172,7 +168,7 @@ textarea {
   font-size: 0.78rem;
   letter-spacing: 0.4em;
   padding-left: 0.4em;
-  color: var(--neon-pink);
+  color: var(--accent);
 }
 
 /* ---------- Sidebar ---------- */
@@ -186,12 +182,12 @@ textarea {
   display: flex;
   flex-direction: column;
   padding: 28px 0 20px;
-  background: linear-gradient(180deg, rgba(13, 16, 34, 0.85), rgba(10, 10, 26, 0.85));
+  background: linear-gradient(180deg, rgba(17, 17, 17, 0.85), rgba(10, 10, 10, 0.85));
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: inset 0 0 30px rgba(139, 92, 246, 0.06);
+  box-shadow: inset 0 0 30px rgba(212, 212, 212, 0.06);
 }
 
 .sidebar__nav {
@@ -221,12 +217,12 @@ textarea {
 
 .nav-link:hover {
   color: var(--text-primary);
-  background: rgba(139, 92, 246, 0.08);
+  background: rgba(212, 212, 212, 0.08);
 }
 
 .nav-link--active {
   color: var(--text-primary);
-  background: linear-gradient(90deg, rgba(255, 45, 149, 0.22), rgba(255, 45, 149, 0) 85%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 85%);
 }
 
 .nav-link--active::before {
@@ -237,12 +233,12 @@ textarea {
   bottom: 8px;
   width: 3px;
   border-radius: 0 3px 3px 0;
-  background: var(--neon-pink);
-  box-shadow: var(--glow-pink);
+  background: var(--accent);
+  box-shadow: var(--glow);
 }
 
 .nav-link--active svg {
-  color: var(--neon-pink);
+  color: var(--accent);
 }
 
 .nav-link:focus-visible {
@@ -282,7 +278,7 @@ textarea {
   justify-content: space-between;
   height: var(--topbar-height);
   padding: 0 16px;
-  background: rgba(10, 10, 26, 0.95);
+  background: rgba(10, 10, 10, 0.95);
   border-bottom: 1px solid var(--glass-border);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -307,7 +303,7 @@ textarea {
   border-radius: var(--radius-md);
   box-shadow:
     0 18px 40px rgba(0, 0, 0, 0.5),
-    var(--glow-purple);
+    var(--glow-muted);
 }
 
 .topbar__menu .nav-link {
@@ -322,7 +318,7 @@ textarea {
 .logo--compact .logo__hex {
   width: 34px;
   height: 38px;
-  filter: drop-shadow(0 0 6px rgba(255, 45, 149, 0.45));
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.45));
 }
 
 .logo--compact .logo__letter {
@@ -358,7 +354,7 @@ textarea {
   height: 40px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--glass-border);
-  background: rgba(13, 16, 34, 0.6);
+  background: rgba(17, 17, 17, 0.6);
   color: var(--text-secondary);
   transition:
     color 0.2s ease,
@@ -368,8 +364,8 @@ textarea {
 
 .icon-button:hover {
   color: var(--text-primary);
-  border-color: var(--neon-pink);
-  box-shadow: var(--glow-pink);
+  border-color: var(--accent);
+  box-shadow: var(--glow);
 }
 
 /* ---------- Sections ---------- */
@@ -389,8 +385,8 @@ textarea {
   font-size: 0.8rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--neon-pink);
-  text-shadow: 0 0 10px rgba(255, 45, 149, 0.5);
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .section__title {
@@ -403,7 +399,7 @@ textarea {
 /* ---------- Glass cards (shared by Section content) ---------- */
 .glass-card {
   padding: 22px 24px;
-  background: rgba(10, 10, 26, 0.55);
+  background: rgba(10, 10, 10, 0.55);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
 }
@@ -431,7 +427,7 @@ textarea {
 /* The intro card spans the full width so the About text opens with who the Owner is. */
 .about__topic:first-child {
   grid-column: 1 / -1;
-  border-color: rgba(255, 45, 149, 0.35);
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 .about__topic p {
@@ -459,8 +455,8 @@ textarea {
   bottom: 22px;
   width: 3px;
   border-radius: 3px;
-  background: var(--gradient-neon);
-  box-shadow: var(--glow-pink);
+  background: var(--accent);
+  box-shadow: var(--glow);
 }
 
 .highlight__label {
@@ -468,7 +464,7 @@ textarea {
   font-size: 0.72rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--electric-blue);
+  color: var(--accent-soft);
 }
 
 .highlight__value {
@@ -489,7 +485,7 @@ textarea {
   padding: 0 18px;
   border: 1px solid var(--glass-border);
   border-radius: 999px;
-  background: rgba(10, 10, 26, 0.55);
+  background: rgba(10, 10, 10, 0.55);
   color: var(--text-secondary);
   font-size: 0.9rem;
   font-weight: 500;
@@ -507,9 +503,9 @@ textarea {
 
 .skill-tab--active {
   color: var(--text-primary);
-  border-color: var(--neon-pink);
-  background: linear-gradient(90deg, rgba(255, 45, 149, 0.22), rgba(139, 92, 246, 0.18));
-  box-shadow: var(--glow-pink);
+  border-color: var(--accent);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.22), rgba(212, 212, 212, 0.18));
+  box-shadow: var(--glow);
 }
 
 .skill-panel {
@@ -542,10 +538,10 @@ textarea {
 .skill-card:hover,
 .skill-card:focus-visible {
   transform: translateY(-3px);
-  border-color: rgba(0, 207, 255, 0.55);
+  border-color: rgba(255, 255, 255, 0.55);
   box-shadow:
-    0 0 0 1px rgba(0, 207, 255, 0.15) inset,
-    var(--glow-blue);
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+    var(--glow-soft);
 }
 
 .skill-card svg {
@@ -567,18 +563,18 @@ textarea {
   margin-top: 28px;
   padding: clamp(32px, 5vw, 56px) 24px;
   text-align: center;
-  border-color: rgba(255, 45, 149, 0.4);
+  border-color: rgba(255, 255, 255, 0.4);
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(255, 45, 149, 0.16), transparent 65%),
-    rgba(10, 10, 26, 0.55);
+    radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.16), transparent 65%),
+    rgba(10, 10, 10, 0.55);
   box-shadow:
-    0 0 40px rgba(255, 45, 149, 0.12),
-    inset 0 0 30px rgba(139, 92, 246, 0.08);
+    0 0 40px rgba(255, 255, 255, 0.12),
+    inset 0 0 30px rgba(212, 212, 212, 0.08);
 }
 
 .coming-soon__icon {
-  color: var(--neon-pink);
-  filter: drop-shadow(0 0 12px rgba(255, 45, 149, 0.6));
+  color: var(--accent);
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.6));
 }
 
 .coming-soon__title {
@@ -608,10 +604,10 @@ textarea {
 .project-card:hover,
 .project-card:focus-within {
   transform: translateY(-4px);
-  border-color: rgba(255, 45, 149, 0.5);
+  border-color: rgba(255, 255, 255, 0.5);
   box-shadow:
     0 14px 34px rgba(0, 0, 0, 0.4),
-    var(--glow-pink);
+    var(--glow);
 }
 
 .project-card--featured {
@@ -621,10 +617,10 @@ textarea {
   align-items: center;
   margin-top: 28px;
   padding: 24px;
-  border-color: rgba(139, 92, 246, 0.45);
+  border-color: rgba(212, 212, 212, 0.45);
   background:
-    linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(255, 45, 149, 0.05) 60%, transparent),
-    rgba(10, 10, 26, 0.55);
+    linear-gradient(135deg, rgba(212, 212, 212, 0.12), rgba(255, 255, 255, 0.05) 60%, transparent),
+    rgba(10, 10, 10, 0.55);
 }
 
 .project-card__body {
@@ -638,13 +634,13 @@ textarea {
   font-size: 0.75rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--neon-pink);
+  color: var(--accent);
 }
 
 .project-card__title {
   font-size: 1.15rem;
   font-weight: 700;
-  color: var(--electric-blue);
+  color: var(--accent-soft);
 }
 
 .project-card--featured .project-card__title {
@@ -684,12 +680,12 @@ textarea {
 
 .tag {
   padding: 3px 10px;
-  border: 1px solid rgba(139, 92, 246, 0.4);
+  border: 1px solid rgba(212, 212, 212, 0.4);
   border-radius: 6px;
-  background: rgba(139, 92, 246, 0.1);
+  background: rgba(212, 212, 212, 0.1);
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: #c4b5fd;
+  color: #d4d4d4;
 }
 
 .project-preview {
@@ -713,9 +709,9 @@ textarea {
   justify-content: center;
   gap: 10px;
   background:
-    linear-gradient(rgba(139, 92, 246, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139, 92, 246, 0.08) 1px, transparent 1px),
-    radial-gradient(ellipse at 50% 40%, rgba(255, 45, 149, 0.18), transparent 70%),
+    linear-gradient(rgba(212, 212, 212, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 212, 212, 0.08) 1px, transparent 1px),
+    radial-gradient(ellipse at 50% 40%, rgba(255, 255, 255, 0.18), transparent 70%),
     var(--bg-secondary);
   background-size:
     24px 24px,
@@ -728,8 +724,8 @@ textarea {
   font-family: var(--font-mono);
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
-  color: var(--electric-blue);
-  text-shadow: 0 0 18px rgba(0, 207, 255, 0.6);
+  color: var(--accent-soft);
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.6);
 }
 
 .project-preview__label {
@@ -743,7 +739,7 @@ textarea {
 /* Placeholder for a link the Owner hasn't configured: clearly inert, never a working-looking link.
    Doubled class so these win over the base .btn rules defined later in this file. */
 .btn.btn--placeholder {
-  border: 1px dashed rgba(165, 167, 197, 0.45);
+  border: 1px dashed rgba(163, 163, 163, 0.45);
   background: transparent;
   color: var(--text-secondary);
   font-weight: 500;
@@ -792,8 +788,8 @@ textarea {
 
 .contact__item > svg {
   flex-shrink: 0;
-  color: var(--neon-pink);
-  filter: drop-shadow(0 0 6px rgba(255, 45, 149, 0.5));
+  color: var(--accent);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
 }
 
 .contact__label {
@@ -801,7 +797,7 @@ textarea {
   font-size: 0.72rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--electric-blue);
+  color: var(--accent-soft);
 }
 
 .contact__value {
@@ -810,7 +806,7 @@ textarea {
 }
 
 a.contact__value:hover {
-  color: var(--neon-pink);
+  color: var(--accent);
 }
 
 .contact__email-button {
@@ -848,7 +844,7 @@ a.contact__value:hover {
   padding: 11px 14px;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
-  background: rgba(5, 5, 16, 0.7);
+  background: rgba(5, 5, 5, 0.7);
   color: var(--text-primary);
   transition:
     border-color 0.2s ease,
@@ -862,21 +858,21 @@ a.contact__value:hover {
 
 .form-field input:focus,
 .form-field textarea:focus {
-  border-color: var(--electric-blue);
-  outline: 2px solid var(--electric-blue);
+  border-color: var(--accent-soft);
+  outline: 2px solid var(--accent-soft);
   outline-offset: 2px;
-  box-shadow: 0 0 14px rgba(0, 207, 255, 0.3);
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.3);
 }
 
 /* Invalid fields stay pink, even while focused. */
 .form-field [aria-invalid='true'],
 .form-field [aria-invalid='true']:focus {
-  border-color: var(--neon-pink);
+  border-color: var(--accent);
 }
 
 .form-error {
   font-size: 0.82rem;
-  color: #ff7ab8;
+  color: #e5e5e5;
 }
 
 .form-error--summary {
@@ -911,8 +907,8 @@ a.contact__value:hover {
   right: 0;
   z-index: 40;
   height: 3px;
-  background: var(--gradient-neon);
-  box-shadow: 0 0 10px rgba(255, 45, 149, 0.6);
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
   transform: scaleX(0);
   transform-origin: left center;
   pointer-events: none;
@@ -928,10 +924,10 @@ a.contact__value:hover {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  border: 1px solid var(--neon-pink);
-  background: rgba(10, 10, 26, 0.85);
+  border: 1px solid var(--accent);
+  background: rgba(10, 10, 10, 0.85);
   color: var(--text-primary);
-  box-shadow: var(--glow-pink);
+  box-shadow: var(--glow);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   /* Hidden until the Visitor scrolls down; stays in the DOM (aria-hidden, untabbable) meanwhile. */
@@ -953,7 +949,7 @@ a.contact__value:hover {
 
 .back-to-top--visible:hover {
   transform: translateY(-3px);
-  box-shadow: 0 0 26px rgba(255, 45, 149, 0.6);
+  box-shadow: 0 0 26px rgba(255, 255, 255, 0.6);
 }
 
 .hero__title:focus {
@@ -975,7 +971,7 @@ a.contact__value:hover {
   height: 420px;
   margin: -210px 0 0 -210px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.16), rgba(255, 45, 149, 0.06) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(212, 212, 212, 0.16), rgba(255, 255, 255, 0.06) 45%, transparent 70%);
   transform: translate3d(var(--cursor-x, -1000px), var(--cursor-y, -1000px), 0);
   pointer-events: none;
 }
@@ -995,8 +991,8 @@ a.contact__value:hover {
   top: 6px;
   bottom: 6px;
   width: 2px;
-  background: linear-gradient(180deg, var(--neon-pink), var(--neon-purple) 60%, transparent);
-  box-shadow: 0 0 10px rgba(255, 45, 149, 0.4);
+  background: linear-gradient(180deg, var(--accent), var(--accent-muted) 60%, transparent);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
 }
 
 .timeline__item {
@@ -1014,16 +1010,16 @@ a.contact__value:hover {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 2px solid var(--neon-pink);
+  border: 2px solid var(--accent);
   background: var(--bg-main);
-  box-shadow: var(--glow-pink);
+  box-shadow: var(--glow);
 }
 
 .timeline__period {
   font-family: var(--font-mono);
   font-size: 0.8rem;
   letter-spacing: 0.08em;
-  color: var(--neon-pink);
+  color: var(--accent);
 }
 
 .timeline__card .card-title {
@@ -1042,7 +1038,7 @@ a.contact__value:hover {
 }
 
 .timeline__year {
-  color: var(--electric-blue);
+  color: var(--accent-soft);
   white-space: nowrap;
 }
 
@@ -1053,7 +1049,7 @@ a.contact__value:hover {
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--electric-blue);
+  color: var(--accent-soft);
 }
 
 .timeline__list {
@@ -1083,16 +1079,13 @@ a.contact__value:hover {
   border: 0;
 }
 
-.text-gradient {
-  background: linear-gradient(90deg, var(--neon-pink), #ff5fa8 60%, var(--neon-purple));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.text-accent {
+  color: var(--accent);
 }
 
 .text-blue {
-  color: var(--electric-blue);
-  text-shadow: 0 0 18px rgba(0, 207, 255, 0.45);
+  color: var(--accent-soft);
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
 }
 
 /* ---------- Buttons ---------- */
@@ -1116,30 +1109,31 @@ a.contact__value:hover {
 }
 
 .btn--primary {
-  background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple) 70%, #5b5bf6);
+  background: var(--accent);
+  color: #000000;
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.08) inset,
-    0 8px 28px rgba(255, 45, 149, 0.3);
+    0 8px 28px rgba(255, 255, 255, 0.3);
 }
 
 .btn--primary:hover {
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.12) inset,
-    0 10px 34px rgba(255, 45, 149, 0.45);
+    0 10px 34px rgba(255, 255, 255, 0.45);
 }
 
 .btn--ghost {
-  border: 1px solid rgba(0, 207, 255, 0.4);
-  background: rgba(10, 10, 26, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(10, 10, 10, 0.6);
 }
 
 .btn--ghost svg {
-  color: var(--electric-blue);
+  color: var(--accent-soft);
 }
 
 .btn--ghost:hover {
-  border-color: var(--electric-blue);
-  box-shadow: var(--glow-blue);
+  border-color: var(--accent-soft);
+  box-shadow: var(--glow-soft);
 }
 
 /* ---------- Backdrop: grid, stars and orbs (CSS-only) ---------- */
@@ -1155,8 +1149,8 @@ a.contact__value:hover {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(139, 92, 246, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139, 92, 246, 0.07) 1px, transparent 1px);
+    linear-gradient(rgba(212, 212, 212, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 212, 212, 0.07) 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse 80% 70% at 60% 30%, #000 20%, transparent 75%);
   -webkit-mask-image: radial-gradient(ellipse 80% 70% at 60% 30%, #000 20%, transparent 75%);
@@ -1171,21 +1165,21 @@ a.contact__value:hover {
 
 .backdrop__stars--near {
   background-image:
-    radial-gradient(1.5px 1.5px at 40px 60px, rgba(245, 245, 255, 0.8), transparent),
-    radial-gradient(1px 1px at 190px 140px, rgba(0, 207, 255, 0.8), transparent),
-    radial-gradient(1.5px 1.5px at 310px 40px, rgba(255, 45, 149, 0.7), transparent),
-    radial-gradient(1px 1px at 120px 300px, rgba(245, 245, 255, 0.7), transparent),
-    radial-gradient(1.5px 1.5px at 260px 250px, rgba(139, 92, 246, 0.8), transparent);
+    radial-gradient(1.5px 1.5px at 40px 60px, rgba(245, 245, 245, 0.8), transparent),
+    radial-gradient(1px 1px at 190px 140px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1.5px 1.5px at 310px 40px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 120px 300px, rgba(245, 245, 245, 0.7), transparent),
+    radial-gradient(1.5px 1.5px at 260px 250px, rgba(212, 212, 212, 0.8), transparent);
   background-size: 380px 380px;
   animation: twinkle 6s ease-in-out infinite alternate;
 }
 
 .backdrop__stars--far {
   background-image:
-    radial-gradient(1px 1px at 80px 20px, rgba(245, 245, 255, 0.45), transparent),
-    radial-gradient(1px 1px at 230px 170px, rgba(245, 245, 255, 0.35), transparent),
-    radial-gradient(1px 1px at 20px 210px, rgba(0, 207, 255, 0.4), transparent),
-    radial-gradient(1px 1px at 160px 90px, rgba(245, 245, 255, 0.3), transparent);
+    radial-gradient(1px 1px at 80px 20px, rgba(245, 245, 245, 0.45), transparent),
+    radial-gradient(1px 1px at 230px 170px, rgba(245, 245, 245, 0.35), transparent),
+    radial-gradient(1px 1px at 20px 210px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 160px 90px, rgba(245, 245, 245, 0.3), transparent);
   background-size: 260px 260px;
   animation: twinkle 9s ease-in-out infinite alternate-reverse;
 }
@@ -1203,7 +1197,7 @@ a.contact__value:hover {
   right: 8%;
   width: 380px;
   height: 380px;
-  background: radial-gradient(circle, rgba(255, 45, 149, 0.55), transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.55), transparent 70%);
 }
 
 .backdrop__orb--purple {
@@ -1211,7 +1205,7 @@ a.contact__value:hover {
   left: 18%;
   width: 460px;
   height: 460px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.45), transparent 70%);
+  background: radial-gradient(circle, rgba(212, 212, 212, 0.45), transparent 70%);
   animation-duration: 32s;
   animation-delay: -8s;
 }
@@ -1221,7 +1215,7 @@ a.contact__value:hover {
   right: 22%;
   width: 360px;
   height: 360px;
-  background: radial-gradient(circle, rgba(0, 207, 255, 0.35), transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.35), transparent 70%);
   animation-duration: 29s;
   animation-delay: -14s;
 }
@@ -1247,16 +1241,16 @@ a.contact__value:hover {
   font-size: 0.85rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--neon-pink);
-  text-shadow: 0 0 10px rgba(255, 45, 149, 0.5);
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .hero__eyebrow::after {
   content: '';
   width: 32px;
   height: 2px;
-  background: var(--neon-pink);
-  box-shadow: var(--glow-pink);
+  background: var(--accent);
+  box-shadow: var(--glow);
 }
 
 .hero__title {
@@ -1280,7 +1274,7 @@ a.contact__value:hover {
   min-height: 1.6em;
   font-family: var(--font-mono);
   font-size: 1rem;
-  color: var(--electric-blue);
+  color: var(--accent-soft);
 }
 
 .hero__caret {
@@ -1289,8 +1283,8 @@ a.contact__value:hover {
   height: 1.1em;
   margin-left: 3px;
   vertical-align: -0.15em;
-  background: var(--neon-pink);
-  box-shadow: var(--glow-pink);
+  background: var(--accent);
+  box-shadow: var(--glow);
   animation: blink 1s steps(1) infinite;
 }
 
@@ -1341,7 +1335,7 @@ a.contact__value:hover {
 .orbit__ring--outer {
   inset: -4%;
   padding: 2px;
-  background: conic-gradient(from 0deg, var(--neon-pink), var(--neon-purple), var(--electric-blue), var(--neon-pink));
+  background: conic-gradient(from 0deg, var(--accent), var(--accent-muted), var(--accent-soft), var(--accent));
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -1349,20 +1343,20 @@ a.contact__value:hover {
   mask:
     linear-gradient(#000 0 0) content-box exclude,
     linear-gradient(#000 0 0);
-  filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.8)) drop-shadow(0 0 22px rgba(255, 45, 149, 0.45));
+  filter: drop-shadow(0 0 10px rgba(212, 212, 212, 0.8)) drop-shadow(0 0 22px rgba(255, 255, 255, 0.45));
   animation: spin 18s linear infinite;
 }
 
 .orbit__ring--tilted {
   inset: 18% -26%;
-  border: 1px solid rgba(139, 92, 246, 0.55);
+  border: 1px solid rgba(212, 212, 212, 0.55);
   transform: rotate(-14deg);
-  box-shadow: 0 0 14px rgba(139, 92, 246, 0.35);
+  box-shadow: 0 0 14px rgba(212, 212, 212, 0.35);
 }
 
 .orbit__ring--inner {
   inset: 9%;
-  border: 1px dashed rgba(0, 207, 255, 0.35);
+  border: 1px dashed rgba(255, 255, 255, 0.35);
   animation: spin 40s linear infinite reverse;
 }
 
@@ -1376,8 +1370,8 @@ a.contact__value:hover {
   left: 4%;
   width: 22px;
   height: 22px;
-  background: radial-gradient(circle at 30% 30%, #a78bfa, #3b1d8f);
-  box-shadow: 0 0 14px rgba(139, 92, 246, 0.7);
+  background: radial-gradient(circle at 30% 30%, #e5e5e5, #404040);
+  box-shadow: 0 0 14px rgba(212, 212, 212, 0.7);
   animation: float 7s ease-in-out infinite;
 }
 
@@ -1386,8 +1380,8 @@ a.contact__value:hover {
   right: 12%;
   width: 34px;
   height: 34px;
-  background: radial-gradient(circle at 30% 30%, #6d4bd8, #1a0f4a);
-  box-shadow: 0 0 18px rgba(139, 92, 246, 0.5);
+  background: radial-gradient(circle at 30% 30%, #737373, #171717);
+  box-shadow: 0 0 18px rgba(212, 212, 212, 0.5);
   animation: float 9s ease-in-out infinite reverse;
 }
 
@@ -1399,10 +1393,10 @@ a.contact__value:hover {
   height: 78%;
   border-radius: 50%;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 40%, rgba(139, 92, 246, 0.28), rgba(10, 10, 26, 0.95) 70%);
+  background: radial-gradient(circle at 50% 40%, rgba(212, 212, 212, 0.28), rgba(10, 10, 10, 0.95) 70%);
   box-shadow:
-    inset 0 0 40px rgba(255, 45, 149, 0.25),
-    0 0 50px rgba(139, 92, 246, 0.35);
+    inset 0 0 40px rgba(255, 255, 255, 0.25),
+    0 0 50px rgba(212, 212, 212, 0.35);
 }
 
 .orbit__photo {
@@ -1415,10 +1409,10 @@ a.contact__value:hover {
   font-size: calc(var(--orbit-size) * 0.4);
   font-weight: 800;
   line-height: 1;
-  color: #ff5fae;
+  color: #ffffff;
   text-shadow:
-    0 0 14px rgba(255, 45, 149, 0.75),
-    0 0 36px rgba(139, 92, 246, 0.55);
+    0 0 14px rgba(255, 255, 255, 0.75),
+    0 0 36px rgba(212, 212, 212, 0.55);
   animation: pulse-glow 4s ease-in-out infinite;
 }
 
@@ -1430,14 +1424,14 @@ a.contact__value:hover {
   z-index: 1;
   margin: 0;
   width: min(330px, 72%);
-  background: rgba(13, 16, 34, 0.82);
+  background: rgba(17, 17, 17, 0.82);
   border: 1px solid var(--glass-border-strong);
   border-radius: var(--radius-md);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow:
     0 18px 40px rgba(0, 0, 0, 0.45),
-    0 0 26px rgba(139, 92, 246, 0.2);
+    0 0 26px rgba(212, 212, 212, 0.2);
   animation: float 8s ease-in-out infinite;
 }
 
@@ -1452,7 +1446,7 @@ a.contact__value:hover {
 .code-card__brackets {
   font-family: var(--font-mono);
   font-weight: 700;
-  color: var(--electric-blue);
+  color: var(--accent-soft);
 }
 
 .code-card__dots {
@@ -1464,7 +1458,7 @@ a.contact__value:hover {
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: var(--neon-pink);
+  background: var(--accent);
 }
 
 .code-card__dots span:first-child {
@@ -1483,19 +1477,19 @@ a.contact__value:hover {
 }
 
 .tok-keyword {
-  color: var(--neon-pink);
+  color: var(--accent);
 }
 
 .tok-var {
-  color: #6ee7b7;
+  color: #e5e5e5;
 }
 
 .tok-key {
-  color: #93c5fd;
+  color: #a3a3a3;
 }
 
 .tok-string {
-  color: #fcd34d;
+  color: #d4d4d4;
 }
 
 .tok-comment {

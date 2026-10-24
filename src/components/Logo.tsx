@@ -1,4 +1,3 @@
-import { useId } from 'react';
 import type { SiteConfig } from '../types';
 
 interface LogoProps {
@@ -10,23 +9,14 @@ interface LogoProps {
 }
 
 export default function Logo({ site, withWordmark = true, compact = false }: LogoProps) {
-  // The logo appears in both the sidebar and the top bar, so its gradient id must be unique.
-  const gradientId = useId();
   return (
     <a href="#home" className={`logo${compact ? ' logo--compact' : ''}`} aria-label={`${site.fullName} — back to top`}>
       <span className="logo__hex" aria-hidden="true">
         <svg viewBox="0 0 64 72" className="logo__hex-svg">
-          <defs>
-            <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="var(--neon-pink)" />
-              <stop offset="55%" stopColor="var(--neon-purple)" />
-              <stop offset="100%" stopColor="var(--electric-blue)" />
-            </linearGradient>
-          </defs>
           <polygon
             points="32,3 61,19.5 61,52.5 32,69 3,52.5 3,19.5"
-            fill="rgba(255, 45, 149, 0.08)"
-            stroke={`url(#${gradientId})`}
+            fill="rgba(255, 255, 255, 0.08)"
+            stroke="var(--accent)"
             strokeWidth="2.5"
           />
         </svg>

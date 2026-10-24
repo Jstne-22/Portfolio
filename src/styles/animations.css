@@ -37,8 +37,8 @@
 @keyframes pulse-glow {
   50% {
     text-shadow:
-      0 0 22px rgba(255, 45, 149, 0.95),
-      0 0 52px rgba(139, 92, 246, 0.7);
+      0 0 22px rgba(255, 255, 255, 0.95),
+      0 0 52px rgba(212, 212, 212, 0.7);
   }
 }
 

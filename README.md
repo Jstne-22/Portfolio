@@ -72,7 +72,7 @@ Common changes:
 - **LinkedIn (or another profile):** in `src/data/portfolio.ts`, uncomment the LinkedIn line in `socials` and put in your real URL. Its icon then appears in the sidebar and in Contact.
 - **Coursework and activities:** add text to the `coursework` and `activities` lists in `src/data/education.ts`. Empty lists show nothing.
 - **Moving to a new year level:** update `yearLevel` in `src/data/education.ts` (the About highlight follows it) and the "3rd-year" wording in the first About card in `src/data/portfolio.ts`.
-- **Colours:** the palette is a set of CSS variables at the top of `src/styles/global.css` (`--neon-pink`, `--electric-blue`, …).
+- **Colours:** the palette is a set of CSS variables at the top of `src/styles/global.css` (`--accent`, `--accent-muted`, `--bg-main`, …).
 
 ## 6. Add or remove Skills
 
