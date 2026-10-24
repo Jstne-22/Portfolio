@@ -26,6 +26,38 @@
   }
 }
 
+/* About: highlights move from a side column to a row of cards under the text. */
+@media (max-width: 1100px) {
+  .about {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .about__highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .about__topics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .glass-card {
+    padding: 18px;
+  }
+
+  .highlight {
+    padding-left: 26px;
+  }
+
+  .highlight::before {
+    left: 12px;
+    top: 18px;
+    bottom: 18px;
+  }
+}
+
 /* Hero: below ~1100px the visual column is too narrow for the card to sit beside the
    emblem, so the card drops below it, overlapping only the bottom of the rings. */
 @media (max-width: 1100px) {

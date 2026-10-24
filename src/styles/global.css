@@ -400,6 +400,172 @@ textarea {
   line-height: 1.2;
 }
 
+/* ---------- Glass cards (shared by Section content) ---------- */
+.glass-card {
+  padding: 22px 24px;
+  background: rgba(10, 10, 26, 0.55);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+/* ---------- About ---------- */
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.about__topics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* The intro card spans the full width so the About text opens with who the Owner is. */
+.about__topic:first-child {
+  grid-column: 1 / -1;
+  border-color: rgba(255, 45, 149, 0.35);
+}
+
+.about__topic p {
+  margin-top: 8px;
+  color: var(--text-secondary);
+}
+
+.about__highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+}
+
+.highlight {
+  position: relative;
+  padding-left: 30px;
+}
+
+.highlight::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 22px;
+  bottom: 22px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--gradient-neon);
+  box-shadow: var(--glow-pink);
+}
+
+.highlight__label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--electric-blue);
+}
+
+.highlight__value {
+  margin: 4px 0 0;
+  font-weight: 600;
+}
+
+/* ---------- Education timeline ---------- */
+.timeline {
+  position: relative;
+  margin: 28px 0 0;
+  padding: 0 0 0 32px;
+  list-style: none;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--neon-pink), var(--neon-purple) 60%, transparent);
+  box-shadow: 0 0 10px rgba(255, 45, 149, 0.4);
+}
+
+.timeline__item {
+  position: relative;
+}
+
+.timeline__item + .timeline__item {
+  margin-top: 20px;
+}
+
+.timeline__dot {
+  position: absolute;
+  left: -32px;
+  top: 22px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--neon-pink);
+  background: var(--bg-main);
+  box-shadow: var(--glow-pink);
+}
+
+.timeline__period {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--neon-pink);
+}
+
+.timeline__card .card-title {
+  margin-top: 6px;
+  font-size: 1.2rem;
+}
+
+.timeline__location {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+.timeline__degree {
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+.timeline__year {
+  color: var(--electric-blue);
+  white-space: nowrap;
+}
+
+.timeline__subheading {
+  margin: 18px 0 8px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--electric-blue);
+}
+
+.timeline__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.timeline__list li {
+  padding: 4px 12px;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
 /* ---------- Utilities ---------- */
 .sr-only {
   position: absolute;

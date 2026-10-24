@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import App from './App';
+import { educationEntries } from './data/education';
 import { siteConfig } from './data/portfolio';
 
 /** Advances fake timers in small ticks so effects that schedule follow-up timers get to run. */
@@ -217,5 +218,58 @@ describe('Phone and tablet menu', () => {
       .map((link) => link.textContent);
     expect(labels).toEqual(['Home', 'About', 'Skills', 'Projects', 'Education', 'Contact']);
     expect(within(menu).getByRole('link', { name: 'Home' })).toHaveAttribute('aria-current', 'location');
+  });
+});
+
+describe('About', () => {
+  it('introduces the Owner and shows the highlight facts from the site config', () => {
+    render(<App />);
+    const about = document.getElementById('about')!;
+    expect(about).toHaveTextContent(/3rd-year Bachelor of Science in Computer Science student/i);
+    expect(about).toHaveTextContent(/learn best by building/i);
+
+    const highlights: [RegExp, RegExp][] = [
+      [/program/i, /BS Computer Science/],
+      [/year level/i, /3rd Year/],
+      [/location/i, /Calbayog City, Philippines/],
+      [/focus/i, /Web Development/],
+    ];
+    for (const [label, value] of highlights) {
+      const term = within(about).getByText(label, { selector: 'dt' });
+      expect(term.nextElementSibling).toHaveTextContent(value);
+    }
+  });
+});
+
+describe('Education', () => {
+  it('shows the school, program, year level and period', () => {
+    render(<App />);
+    const education = document.getElementById('education')!;
+    expect(within(education).getByRole('heading', { name: /christ the king college/i })).toBeInTheDocument();
+    expect(education).toHaveTextContent('Calbayog City');
+    expect(education).toHaveTextContent('Bachelor of Science in Computer Science');
+    expect(education).toHaveTextContent('3rd Year');
+    expect(education).toHaveTextContent('2024 – Present');
+  });
+
+  it('shows no coursework or activities headings while those lists are empty', () => {
+    render(<App />);
+    const education = document.getElementById('education')!;
+    expect(within(education).queryByRole('heading', { name: /coursework/i })).not.toBeInTheDocument();
+    expect(within(education).queryByRole('heading', { name: /activities/i })).not.toBeInTheDocument();
+  });
+
+  it('lists coursework and activities once the Owner fills them in', () => {
+    const [entry] = educationEntries;
+    render(
+      <App
+        education={[{ ...entry, coursework: ['Data Structures and Algorithms'], activities: ['Campus coding club'] }]}
+      />,
+    );
+    const education = document.getElementById('education')!;
+    const coursework = within(education).getByRole('heading', { name: /coursework/i });
+    expect(coursework.nextElementSibling).toHaveTextContent('Data Structures and Algorithms');
+    const activities = within(education).getByRole('heading', { name: /activities/i });
+    expect(activities.nextElementSibling).toHaveTextContent('Campus coding club');
   });
 });

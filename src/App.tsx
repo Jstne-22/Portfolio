@@ -1,17 +1,21 @@
+import About from './components/About';
 import Backdrop from './components/Backdrop';
+import Education from './components/Education';
 import Hero from './components/Hero';
 import Navbar from './components/Navbar';
 import Section from './components/Section';
+import { educationEntries } from './data/education';
 import { navSections, siteConfig } from './data/portfolio';
-import type { NavSection, SiteConfig } from './types';
+import type { EducationEntry, NavSection, SiteConfig } from './types';
 
 interface AppProps {
   /** Overridable for tests; defaults to the real data modules. */
   site?: SiteConfig;
   sections?: NavSection[];
+  education?: EducationEntry[];
 }
 
-export default function App({ site = siteConfig, sections = navSections }: AppProps) {
+export default function App({ site = siteConfig, sections = navSections, education = educationEntries }: AppProps) {
   return (
     <div className="app">
       <a href="#main" className="skip-link">
@@ -21,10 +25,10 @@ export default function App({ site = siteConfig, sections = navSections }: AppPr
       <Navbar site={site} sections={sections} />
       <main id="main" className="main">
         <Hero site={site} />
-        <Section id="about" eyebrow="About me" title="About Me" />
+        <About site={site} />
         <Section id="skills" eyebrow="Skills" title="Skills & Tools" />
         <Section id="projects" eyebrow="Projects" title="Projects" />
-        <Section id="education" eyebrow="Education" title="Education" />
+        <Education entries={education} />
         <Section id="contact" eyebrow="Contact me" title="Let’s Work Together" />
       </main>
     </div>

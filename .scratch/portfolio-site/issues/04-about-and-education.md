@@ -8,10 +8,10 @@ All copy lives in data files and invents no awards, jobs or achievements.
 
 **Blocked by:** 01 (Project skeleton with working sidebar navigation)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] About text and highlights come from the site config
-- [ ] The Education entry comes from a typed education data module
-- [ ] Empty coursework/activities lists render nothing (no empty headings)
-- [ ] No invented facts in any copy
-- [ ] Tests: About text and the Education school/program/period render; empty lists produce no headings
+- [x] About text and highlights come from the site config
+- [x] The Education entry comes from a typed education data module
+- [x] Empty coursework/activities lists render nothing (no empty headings)
+- [x] No invented facts in any copy
+- [x] Tests: About text and the Education school/program/period render; empty lists produce no headings
