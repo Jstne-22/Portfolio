@@ -5,12 +5,12 @@ import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 /** Wide viewports with a mouse (or trackpad); never touch screens. */
 const FINE_POINTER_DESKTOP = '(pointer: fine) and (hover: hover) and (min-width: 1024px)';
 
-/** CSS variables written on <html>: the glow's position, and the pointer from -1 to 1 for the hero parallax. */
-const POINTER_VARS = ['--cursor-x', '--cursor-y', '--pointer-x', '--pointer-y'] as const;
+/** CSS variables written on <html>: the pointer from -1 to 1 for the hero parallax. */
+const POINTER_VARS = ['--pointer-x', '--pointer-y'] as const;
 
 /**
- * A soft glow that follows the cursor, plus the pointer position as CSS variables
- * for the hero's gentle parallax. Only on wide viewports with a mouse, and never under reduced motion.
+ * Writes the pointer position as CSS variables for the hero's gentle parallax; renders nothing.
+ * Only on wide viewports with a mouse, and never under reduced motion.
  */
 export default function CursorGlow() {
   const finePointer = useMediaQuery(FINE_POINTER_DESKTOP);
@@ -26,8 +26,6 @@ export default function CursorGlow() {
     const apply = () => {
       frame = 0;
       const values = [
-        `${x}px`,
-        `${y}px`,
         ((x / window.innerWidth) * 2 - 1).toFixed(3),
         ((y / window.innerHeight) * 2 - 1).toFixed(3),
       ];
@@ -46,5 +44,5 @@ export default function CursorGlow() {
     };
   }, [enabled]);
 
-  return enabled ? <div className="cursor-glow" aria-hidden="true" /> : null;
+  return null;
 }
