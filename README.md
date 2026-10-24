@@ -62,7 +62,7 @@ All content lives in `src/data/`. Edit these files, save, and the dev server upd
 | `src/data/portfolio.ts` | Your name, title, the hero tagline (`roles`), `focus`, intro, About cards and highlights, location, email, profile photo, and social links |
 | `src/data/education.ts` | The Education timeline, including optional coursework and activities |
 | `src/data/skills.ts` | The Skill cards and their logos |
-| `src/data/projects.ts` | Your Projects (empty for now, which shows the "Projects coming soon" panel) |
+| `src/data/projects.ts` | Your Projects (TranCash is the Featured Project; an empty list shows a "Projects coming soon" panel) |
 
 **Only put true facts in these files.** Leave optional things out until you have them — the site is designed to look complete without them, and anything missing shows as a clearly marked Placeholder (such as "Link coming soon") rather than a fake value.
 
@@ -89,7 +89,7 @@ import { siDocker } from 'simple-icons';
   `{ kind: 'generic', icon: Database, color: 'var(--electric-blue)' }`.
 - Skills deliberately have no percentage, level or years field.
 
-## 7. Add Projects (for example, TranCash)
+## 7. Add Projects
 
 Edit the list in `src/data/projects.ts`. As soon as it has at least one entry, the "coming soon" panel is replaced by your Project cards.
 
@@ -109,7 +109,9 @@ export const ownerProjects: Project[] = [
 
 - **Check the technology tags against the real code** before publishing.
 - **Preview:** put a real screenshot in `public/images/projects/`. Without one, a "Preview coming soon" illustration is shown — never a broken image.
+- **Screenshot gallery:** give a Project a `screenshots` list (each with `src`, `alt`, `caption` and an optional small `thumb`) to show a browsable gallery on the Featured card instead of a single `preview`. TranCash's screens live in `public/images/projects/trancash/`.
 - **Missing links:** leave `liveUrl` or `sourceUrl` out and the button shows as a disabled "Link coming soon".
+- **Private repository:** set `sourceIsPrivate: true` to show an inert "Private repository" label instead of a source link.
 - **Featured Project:** the first entry with `featured: true` is shown large at the top. If none is flagged, the first entry is featured.
 
 ## 8. Push to GitHub

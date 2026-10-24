@@ -283,8 +283,8 @@ describe('Skills', () => {
   const expectedByCategory: Record<string, string[]> = {
     Frontend: ['HTML5', 'CSS3', 'JavaScript', 'TypeScript', 'React'],
     Backend: ['Node.js', 'Express.js', 'Python', 'Flask'],
-    Database: ['SQL'],
-    Tools: ['Git', 'GitHub', 'Visual Studio Code', 'npm'],
+    Database: ['SQL', 'Supabase'],
+    Tools: ['Git', 'GitHub', 'Visual Studio Code', 'npm', 'Vercel'],
   };
   const shownSkills = () =>
     within(screen.getByRole('tabpanel'))
@@ -336,7 +336,7 @@ describe('Skills', () => {
 });
 
 describe('Projects', () => {
-  // Test Projects live only here; the shipped list is empty.
+  // Test Projects live only here, so these tests don't depend on the shipped list.
   const testProjects: Project[] = [
     {
       title: 'Weather Board',
@@ -367,7 +367,7 @@ describe('Projects', () => {
   it('shows the coming-soon panel and a GitHub link, and no Project cards, while the list is empty', () => {
     const githubUrl = 'https://github.com/someone-else';
     const socials = siteConfig.socials.map((social) => (social.kind === 'github' ? { ...social, url: githubUrl } : social));
-    render(<App site={{ ...siteConfig, socials }} />);
+    render(<App site={{ ...siteConfig, socials }} projects={[]} />);
     const section = projectsSection();
     expect(within(section).getByRole('heading', { name: /projects coming soon/i })).toBeInTheDocument();
     expect(within(section).getByRole('link', { name: /see my code on github/i })).toHaveAttribute('href', githubUrl);
@@ -405,6 +405,40 @@ describe('Projects', () => {
     const featured = within(projectsSection()).getAllByRole('article')[0];
     expect(featured.querySelector('img')).toBeNull();
     expect(featured).toHaveTextContent(/preview coming soon/i);
+  });
+
+  it('pages through a Featured Project’s screenshots with the buttons, thumbnails and arrow keys', async () => {
+    const user = userEvent.setup();
+    const screenshots = ['Home', 'Send money', 'Profile'].map((caption) => ({
+      src: `/shots/${caption}.webp`,
+      alt: `${caption} screen`,
+      caption,
+    }));
+    render(<App projects={[{ ...testProjects[0], screenshots }]} />);
+    const gallery = within(projectsSection()).getByRole('region', { name: /weather board screenshots/i });
+    const shown = () => within(gallery).getAllByRole('img').find((img) => img.getAttribute('alt'));
+
+    expect(shown()).toHaveAttribute('alt', 'Home screen');
+    expect(gallery).toHaveTextContent('1 / 3');
+
+    await user.click(within(gallery).getByRole('button', { name: /previous screenshot/i }));
+    expect(shown()).toHaveAttribute('alt', 'Profile screen');
+
+    await user.click(within(gallery).getByRole('button', { name: 'Send money' }));
+    expect(shown()).toHaveAttribute('alt', 'Send money screen');
+    expect(within(gallery).getByRole('button', { name: 'Send money' })).toHaveAttribute('aria-current', 'true');
+
+    fireEvent.keyDown(gallery, { key: 'ArrowRight' });
+    expect(shown()).toHaveAttribute('alt', 'Profile screen');
+    expect(gallery).toHaveTextContent('3 / 3');
+  });
+
+  it('marks a private repository as private instead of linking to it', () => {
+    render(<App projects={[{ ...testProjects[2], sourceIsPrivate: true }]} />);
+    const card = within(projectsSection()).getByRole('article');
+    expect(card).toHaveTextContent(/private repository/i);
+    expect(within(card).queryByRole('link', { name: /source code/i })).not.toBeInTheDocument();
+    expect(within(card).queryByRole('button', { name: /source code/i })).not.toBeInTheDocument();
   });
 });
 

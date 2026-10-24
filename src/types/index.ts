@@ -99,6 +99,14 @@ export interface ProjectPreview {
   alt: string;
 }
 
+/** One screen in a Project's screenshot gallery. */
+export interface ProjectScreenshot extends ProjectPreview {
+  /** Short name of the screen, shown under the viewer, e.g. "Send money". */
+  caption: string;
+  /** Smaller image for the thumbnail strip; falls back to `src`. */
+  thumb?: string;
+}
+
 /** A piece of software the Owner built. Edit entries in `src/data/projects.ts`. */
 export interface Project {
   title: string;
@@ -106,10 +114,14 @@ export interface Project {
   /** Only technologies the Project actually uses. */
   technologies: string[];
   preview?: ProjectPreview;
+  /** Screens shown as a browsable gallery on the Featured card, in place of `preview`. */
+  screenshots?: ProjectScreenshot[];
   /** Live demo. Leave undefined to show "Link coming soon". */
   liveUrl?: string;
   /** Source code. Leave undefined to show "Link coming soon". */
   sourceUrl?: string;
+  /** The repository is private: shows an inert "Private repository" control instead of a source link. */
+  sourceIsPrivate?: boolean;
   /** Marks the Featured Project; if several are flagged the first wins, if none the first entry is featured. */
   featured?: boolean;
 }

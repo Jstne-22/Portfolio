@@ -24,7 +24,7 @@ _Avoid_: dummy, sample, TODO
 A piece of software the Owner built, shown as a card with its real technologies and links.
 
 **Featured Project**:
-The one Project given visual prominence above the others. None yet; TranCash is the intended first one once the Owner confirms its details.
+The one Project given visual prominence above the others. Currently TranCash, the Owner's mini-thesis e-wallet.
 
 **Skill**:
 A technology the Owner has used or is learning. A Skill carries no proficiency score, percentage or years of experience.

@@ -730,6 +730,123 @@ textarea {
   color: var(--text-secondary);
 }
 
+/* Screenshot gallery on the Featured card: a phone-sized viewer plus a thumbnail strip. */
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.gallery__stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.gallery__viewer {
+  overflow-y: auto;
+  flex: 0 1 290px;
+  min-width: 0;
+  aspect-ratio: 9 / 17;
+  max-height: 70vh;
+  border: 1px solid var(--glass-border);
+  border-radius: 22px;
+  background: var(--bg-secondary);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 212, 212, 0.35) transparent;
+}
+
+.gallery__viewer:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.gallery__viewer img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.gallery__nav {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.gallery__nav:hover,
+.gallery__nav:focus-visible {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.gallery__caption {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.gallery__count {
+  font-family: var(--font-mono);
+  color: var(--accent);
+}
+
+.gallery__strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px 8px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 212, 212, 0.35) transparent;
+}
+
+.gallery__thumb {
+  display: block;
+  flex-shrink: 0;
+  overflow: hidden;
+  width: 48px;
+  height: 72px;
+  padding: 0;
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  opacity: 0.55;
+  cursor: pointer;
+  transition:
+    opacity 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.gallery__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.gallery__thumb:hover,
+.gallery__thumb:focus-visible,
+.gallery__thumb[aria-current='true'] {
+  border-color: rgba(255, 255, 255, 0.8);
+  opacity: 1;
+}
+
 /* Placeholder for a link the Owner hasn't configured: clearly inert, never a working-looking link.
    Doubled class so these win over the base .btn rules defined later in this file. */
 .btn.btn--placeholder {

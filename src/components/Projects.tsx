@@ -1,7 +1,8 @@
-import { ExternalLink, Rocket } from 'lucide-react';
+import { ExternalLink, Lock, Rocket } from 'lucide-react';
 import { useState } from 'react';
 import type { Project, ProjectPreview } from '../types';
 import LinkButton from './LinkButton';
+import ScreenshotGallery from './ScreenshotGallery';
 import Section from './Section';
 import SocialIcon from './SocialIcon';
 
@@ -59,7 +60,11 @@ function withFeaturedFirst(projects: Project[]): Project[] {
 function FeaturedCard({ project }: { project: Project }) {
   return (
     <article className="glass-card project-card project-card--featured">
-      <Preview preview={project.preview} />
+      {project.screenshots?.length ? (
+        <ScreenshotGallery title={project.title} screenshots={project.screenshots} />
+      ) : (
+        <Preview preview={project.preview} />
+      )}
       <div className="project-card__body">
         <p className="project-card__eyebrow">Featured Project</p>
         <ProjectDetails project={project} />
@@ -95,7 +100,14 @@ function ProjectDetails({ project }: { project: Project }) {
           icon={<ExternalLink size={16} aria-hidden="true" />}
           variant="primary"
         />
-        <LinkButton href={project.sourceUrl} label="View Source Code" icon={<SocialIcon kind="github" size={16} />} />
+        {project.sourceIsPrivate ? (
+          <span className="btn btn--placeholder" title="The source code is in a private GitHub repository">
+            <Lock size={16} aria-hidden="true" />
+            Private repository
+          </span>
+        ) : (
+          <LinkButton href={project.sourceUrl} label="View Source Code" icon={<SocialIcon kind="github" size={16} />} />
+        )}
       </div>
     </>
   );

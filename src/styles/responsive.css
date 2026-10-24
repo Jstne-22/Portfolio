@@ -52,6 +52,23 @@
 }
 
 @media (max-width: 640px) {
+  /* Gallery arrows float over the screenshot so the viewer can use the card's full width. */
+  .gallery__nav {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    transform: translateY(-50%);
+    background: rgba(10, 10, 10, 0.75);
+  }
+
+  .gallery__nav:first-child {
+    left: 4px;
+  }
+
+  .gallery__nav:last-child {
+    right: 4px;
+  }
+
   .back-to-top {
     right: 16px;
     bottom: 16px;

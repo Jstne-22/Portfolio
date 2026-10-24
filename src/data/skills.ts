@@ -11,11 +11,13 @@ import {
   siNpm,
   siPython,
   siReact,
+  siSupabase,
   siTypescript,
+  siVercel,
 } from 'simple-icons';
 import type { Skill } from '../types';
 
-// Express and GitHub logos are near-black, so they are drawn in the light text colour.
+// Express, GitHub and Vercel logos are near-black, so they are drawn in the light text colour.
 const lightText = 'var(--text-primary)';
 
 /** Skills shown in the Skills Section, in display order. Add or remove entries freely. */
@@ -34,10 +36,12 @@ export const skills: Skill[] = [
 
   // SQL has no single brand logo.
   { name: 'SQL', category: 'Database', icon: { kind: 'generic', icon: Database, color: '#00CFFF' } },
+  { name: 'Supabase', category: 'Database', icon: { kind: 'brand', icon: siSupabase } },
 
   { name: 'Git', category: 'Tools', icon: { kind: 'brand', icon: siGit } },
   { name: 'GitHub', category: 'Tools', icon: { kind: 'brand', icon: siGithub, color: lightText } },
   // simple-icons no longer includes the Visual Studio Code logo.
   { name: 'Visual Studio Code', category: 'Tools', icon: { kind: 'generic', icon: Code2, color: '#007ACC' } },
   { name: 'npm', category: 'Tools', icon: { kind: 'brand', icon: siNpm } },
+  { name: 'Vercel', category: 'Tools', icon: { kind: 'brand', icon: siVercel, color: lightText } },
 ];
