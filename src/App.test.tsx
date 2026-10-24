@@ -273,3 +273,59 @@ describe('Education', () => {
     expect(activities.nextElementSibling).toHaveTextContent('Campus coding club');
   });
 });
+
+describe('Skills', () => {
+  const expectedByCategory: Record<string, string[]> = {
+    Frontend: ['HTML5', 'CSS3', 'JavaScript', 'TypeScript', 'React'],
+    Backend: ['Node.js', 'Express.js', 'Python', 'Flask'],
+    Database: ['SQL'],
+    Tools: ['Git', 'GitHub', 'Visual Studio Code', 'npm'],
+  };
+  const shownSkills = () =>
+    within(screen.getByRole('tabpanel'))
+      .getAllByRole('listitem')
+      .map((card) => card.textContent);
+
+  it('shows every Skill under All', () => {
+    render(<App />);
+    expect(screen.getByRole('tab', { name: 'All' })).toHaveAttribute('aria-selected', 'true');
+    expect(shownSkills()).toEqual(Object.values(expectedByCategory).flat());
+  });
+
+  it('shows only the chosen Skill Category’s Skills', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    for (const [category, skills] of Object.entries(expectedByCategory)) {
+      await user.click(screen.getByRole('tab', { name: category }));
+      expect(screen.getByRole('tab', { name: category })).toHaveAttribute('aria-selected', 'true');
+      expect(shownSkills()).toEqual(skills);
+    }
+  });
+
+  it('moves between Skill Category tabs with the arrow keys', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(screen.getByRole('tab', { name: 'All' }));
+
+    await user.keyboard('{ArrowRight}');
+    expect(screen.getByRole('tab', { name: 'Frontend' })).toHaveFocus();
+    expect(shownSkills()).toEqual(expectedByCategory.Frontend);
+
+    await user.keyboard('{ArrowLeft}{ArrowLeft}');
+    expect(screen.getByRole('tab', { name: 'Tools' })).toHaveFocus();
+    expect(shownSkills()).toEqual(expectedByCategory.Tools);
+
+    await user.keyboard('{Home}');
+    expect(screen.getByRole('tab', { name: 'All' })).toHaveAttribute('aria-selected', 'true');
+
+    await user.keyboard('{End}');
+    expect(screen.getByRole('tab', { name: 'Tools' })).toHaveFocus();
+    expect(shownSkills()).toEqual(expectedByCategory.Tools);
+  });
+
+  it('shows no percentages, levels or years on Skill cards', () => {
+    render(<App />);
+    const skills = document.getElementById('skills')!;
+    expect(skills.textContent).not.toMatch(/%|\blevel\b|\byears?\b|beginner|intermediate|advanced|expert/i);
+  });
+});

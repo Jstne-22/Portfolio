@@ -1,3 +1,6 @@
+import type { LucideIcon } from 'lucide-react';
+import type { SimpleIcon } from 'simple-icons';
+
 export type SectionId = 'home' | 'about' | 'skills' | 'projects' | 'education' | 'contact';
 
 export interface NavSection {
@@ -66,4 +69,25 @@ export interface EducationEntry {
   coursework: string[];
   /** Rendered only when non-empty. */
   activities: string[];
+}
+
+/** Skill Categories, in the order their filter tabs appear. */
+export const skillCategories = ['Frontend', 'Backend', 'Database', 'Tools'] as const;
+
+export type SkillCategory = (typeof skillCategories)[number];
+
+/**
+ * How a Skill's logo is drawn: a brand logo from `simple-icons`, or a Lucide icon
+ * where no brand logo is available. `color` overrides the brand colour (e.g. for
+ * near-black logos that would vanish on the dark background); palette CSS variables work here.
+ */
+export type SkillIcon =
+  | { kind: 'brand'; icon: SimpleIcon; color?: string }
+  | { kind: 'generic'; icon: LucideIcon; color: string };
+
+/** A technology the Owner has used or is learning. Deliberately has no proficiency field. */
+export interface Skill {
+  name: string;
+  category: SkillCategory;
+  icon: SkillIcon;
 }

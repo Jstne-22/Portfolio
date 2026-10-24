@@ -4,9 +4,11 @@ import Education from './components/Education';
 import Hero from './components/Hero';
 import Navbar from './components/Navbar';
 import Section from './components/Section';
+import Skills from './components/Skills';
 import { educationEntries } from './data/education';
 import { navSections, siteConfig } from './data/portfolio';
-import type { EducationEntry, NavSection, SiteConfig } from './types';
+import { skills } from './data/skills';
+import { skillCategories, type EducationEntry, type NavSection, type SiteConfig } from './types';
 
 interface AppProps {
   /** Overridable for tests; defaults to the real data modules. */
@@ -26,7 +28,7 @@ export default function App({ site = siteConfig, sections = navSections, educati
       <main id="main" className="main">
         <Hero site={site} />
         <About site={site} />
-        <Section id="skills" eyebrow="Skills" title="Skills & Tools" />
+        <Skills skills={skills} categories={skillCategories} />
         <Section id="projects" eyebrow="Projects" title="Projects" />
         <Education entries={education} />
         <Section id="contact" eyebrow="Contact me" title="Let’s Work Together" />

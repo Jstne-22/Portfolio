@@ -4,15 +4,15 @@
 
 **Blocked by:** 01 (Project skeleton with working sidebar navigation)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Typed skills data:
+- [x] Typed skills data:
   - Frontend: HTML5, CSS3, JavaScript, TypeScript, React
   - Backend: Node.js, Express.js, Python, Flask
   - Database: SQL
   - Tools: Git, GitHub, Visual Studio Code, npm
-- [ ] Skill Category is a closed type, and the Skill type has no proficiency field
-- [ ] Logos come from per-icon `simple-icons` imports, with a fallback SVG or Lucide icon where a logo is unavailable
-- [ ] Tabs follow the ARIA tabs pattern and work by keyboard
-- [ ] Grid runs from 2 columns on phones to 4–5 on desktop, with consistent card size
-- [ ] Tests: All shows every Skill; each tab shows only its category's Skills
+- [x] Skill Category is a closed type, and the Skill type has no proficiency field
+- [x] Logos come from per-icon `simple-icons` imports, with a fallback SVG or Lucide icon where a logo is unavailable
+- [x] Tabs follow the ARIA tabs pattern and work by keyboard
+- [x] Grid runs from 2 columns on phones to 4–5 on desktop, with consistent card size
+- [x] Tests: All shows every Skill; each tab shows only its category's Skills
