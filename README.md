@@ -175,7 +175,7 @@ src/
 index.html         Page title, description and fonts
 ```
 
-`my reference image.png` is the original design reference. It is kept in the repository for comparison but is not part of the published site.
+`my reference image.png` is the original design reference. It stays in your local folder for comparison but is ignored by Git, so it is neither pushed to GitHub nor part of the published site.
 
 ## Accessibility and motion
 

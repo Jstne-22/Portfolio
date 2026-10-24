@@ -4,3 +4,6 @@ dist
 *.tsbuildinfo
 .vercel
 .DS_Store
+
+# Design reference (kept locally, not published)
+my reference image.png
