@@ -1,4 +1,4 @@
-import type { NavSection, SiteConfig } from '../types';
+import type { NavSection, SiteConfig, SocialKind } from '../types';
 import { educationEntries } from './education';
 
 /**
@@ -69,3 +69,8 @@ export const navSections: NavSection[] = [
   { id: 'education', label: 'Education' },
   { id: 'contact', label: 'Contact' },
 ];
+
+/** The configured URL for a social profile, or undefined if the Owner hasn't added one. */
+export function socialUrl(site: SiteConfig, kind: SocialKind): string | undefined {
+  return site.socials.find((social) => social.kind === kind)?.url;
+}

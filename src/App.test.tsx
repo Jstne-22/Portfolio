@@ -1,10 +1,14 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 import { educationEntries } from './data/education';
+import { navigateTo } from './lib/navigate';
 import { siteConfig } from './data/portfolio';
 import type { Project } from './types';
+
+// Opening the Visitor's email app is a real browser navigation, which jsdom can't perform or observe.
+vi.mock('./lib/navigate', () => ({ navigateTo: vi.fn() }));
 
 /** Advances fake timers in small ticks so effects that schedule follow-up timers get to run. */
 function passTime(ms: number) {
@@ -401,5 +405,107 @@ describe('Projects', () => {
     const featured = within(projectsSection()).getAllByRole('article')[0];
     expect(featured.querySelector('img')).toBeNull();
     expect(featured).toHaveTextContent(/preview coming soon/i);
+  });
+});
+
+describe('Contact', () => {
+  const contactSection = () => document.getElementById('contact')!;
+  const field = (name: RegExp) => within(contactSection()).getByRole('textbox', { name });
+  const submit = () => within(contactSection()).getByRole('button', { name: /open in my email app/i });
+
+  beforeEach(() => vi.mocked(navigateTo).mockClear());
+
+  it('shows the Owner’s email, GitHub and location, and an email button', () => {
+    render(<App />);
+    const section = contactSection();
+    expect(section).toHaveTextContent('dump9825@gmail.com');
+    expect(section).toHaveTextContent('Calbayog City, Philippines');
+    expect(within(section).getByRole('link', { name: /github\.com\/Jstne-22/i })).toHaveAttribute(
+      'href',
+      'https://github.com/Jstne-22',
+    );
+    expect(within(section).getByRole('link', { name: /email me/i })).toHaveAttribute('href', 'mailto:dump9825@gmail.com');
+  });
+
+  it('lists a social profile the Owner adds to the config, such as LinkedIn', () => {
+    const linkedin = { kind: 'linkedin' as const, label: 'LinkedIn profile', url: 'https://www.linkedin.com/in/someone' };
+    render(<App site={{ ...siteConfig, socials: [...siteConfig.socials, linkedin] }} />);
+    expect(within(contactSection()).getByRole('link', { name: /linkedin\.com\/in\/someone/i })).toHaveAttribute(
+      'href',
+      linkedin.url,
+    );
+  });
+
+  it('explains that the form opens the Visitor’s own email app', () => {
+    render(<App />);
+    expect(contactSection()).toHaveTextContent(/opens your own email app/i);
+  });
+
+  it('shows an error for every field when submitted empty, and opens nothing', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(submit());
+
+    for (const name of [/^name/i, /^email/i, /^subject/i, /^message/i]) {
+      expect(field(name)).toHaveAttribute('aria-invalid', 'true');
+      expect(field(name)).toHaveAccessibleDescription(/required/i);
+    }
+    expect(within(contactSection()).getAllByRole('alert').length).toBeGreaterThan(0);
+    expect(navigateTo).not.toHaveBeenCalled();
+  });
+
+  it('shows an email error for a malformed address', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.type(field(/^name/i), 'Ana Cruz');
+    await user.type(field(/^email/i), 'ana@example');
+    await user.type(field(/^subject/i), 'Project idea');
+    await user.type(field(/^message/i), 'Hello Justine, I would like to talk about a project.');
+    await user.click(submit());
+
+    expect(field(/^email/i)).toHaveAttribute('aria-invalid', 'true');
+    expect(field(/^email/i)).toHaveAccessibleDescription(/valid email/i);
+    expect(field(/^name/i)).not.toHaveAttribute('aria-invalid', 'true');
+    expect(navigateTo).not.toHaveBeenCalled();
+  });
+
+  it('asks for a longer message when it is too short', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.type(field(/^message/i), 'Hi');
+    await user.click(submit());
+    expect(field(/^message/i)).toHaveAccessibleDescription(/at least/i);
+  });
+
+  it('opens a mailto: URL to the Owner with the encoded subject and a body of name, email and message', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.type(field(/^name/i), 'Ana Cruz');
+    await user.type(field(/^email/i), 'ana@example.com');
+    await user.type(field(/^subject/i), 'Project idea');
+    await user.type(field(/^message/i), 'Hello Justine, I would like to talk about a project.');
+    await user.click(submit());
+
+    expect(navigateTo).toHaveBeenCalledWith(
+      'mailto:dump9825@gmail.com' +
+        '?subject=Project%20idea' +
+        '&body=Name%3A%20Ana%20Cruz%0D%0AEmail%3A%20ana%40example.com%0D%0A%0D%0A' +
+        'Hello%20Justine%2C%20I%20would%20like%20to%20talk%20about%20a%20project.',
+    );
+  });
+});
+
+describe('Footer', () => {
+  it('shows the Owner’s name and the current year', () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2031-03-15T12:00:00Z'));
+    try {
+      render(<App />);
+      const footer = screen.getByRole('contentinfo');
+      expect(footer).toHaveTextContent('Justine V. Piamonte');
+      expect(footer).toHaveTextContent('2031');
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

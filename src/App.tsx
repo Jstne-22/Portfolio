@@ -1,13 +1,14 @@
 import About from './components/About';
 import Backdrop from './components/Backdrop';
+import Contact from './components/Contact';
 import Education from './components/Education';
+import Footer from './components/Footer';
 import Hero from './components/Hero';
 import Navbar from './components/Navbar';
 import Projects from './components/Projects';
-import Section from './components/Section';
 import Skills from './components/Skills';
 import { educationEntries } from './data/education';
-import { navSections, siteConfig } from './data/portfolio';
+import { navSections, siteConfig, socialUrl } from './data/portfolio';
 import { ownerProjects } from './data/projects';
 import { skills } from './data/skills';
 import { skillCategories, type EducationEntry, type NavSection, type Project, type SiteConfig } from './types';
@@ -37,10 +38,11 @@ export default function App({
         <Hero site={site} />
         <About site={site} />
         <Skills skills={skills} categories={skillCategories} />
-        <Projects projects={projects} githubUrl={site.socials.find((social) => social.kind === 'github')?.url} />
+        <Projects projects={projects} githubUrl={socialUrl(site, 'github')} />
         <Education entries={education} />
-        <Section id="contact" eyebrow="Contact me" title="Let’s Work Together" />
+        <Contact site={site} />
       </main>
+      <Footer site={site} />
     </div>
   );
 }

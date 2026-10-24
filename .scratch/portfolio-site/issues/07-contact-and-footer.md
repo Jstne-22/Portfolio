@@ -10,11 +10,11 @@ A footer shows the Owner's name and the year.
 
 **Blocked by:** 01 (Project skeleton with working sidebar navigation)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Contact info and the email button use the configured values (`dump9825@gmail.com`)
-- [ ] Validation: all fields required, email well-formed, message has a minimum length; inline errors are announced to assistive technology
-- [ ] A valid submit navigates to a `mailto:` URL with the configured address, the encoded subject, and a body containing name, email and message
-- [ ] No network requests, credentials or secrets
-- [ ] Footer with the Owner's name and the current year
-- [ ] Tests: an empty submit shows per-field errors; an invalid email shows an email error; a valid submit produces the expected `mailto:` URL
+- [x] Contact info and the email button use the configured values (`dump9825@gmail.com`)
+- [x] Validation: all fields required, email well-formed, message has a minimum length; inline errors are announced to assistive technology
+- [x] A valid submit navigates to a `mailto:` URL with the configured address, the encoded subject, and a body containing name, email and message
+- [x] No network requests, credentials or secrets
+- [x] Footer with the Owner's name and the current year
+- [x] Tests: an empty submit shows per-field errors; an invalid email shows an email error; a valid submit produces the expected `mailto:` URL
