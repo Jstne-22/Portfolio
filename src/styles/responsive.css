@@ -38,6 +38,14 @@
   }
 }
 
+/* Featured Project: preview stacks above the details on narrower screens. */
+@media (max-width: 900px) {
+  .project-card--featured {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+}
+
 @media (max-width: 640px) {
   .skill-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -11,11 +11,11 @@ Sample Projects exist only in the tests, never in the shipped data.
 
 **Blocked by:** 01 (Project skeleton with working sidebar navigation)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Typed projects data module, empty at launch. Each entry has a title, description, technologies, an optional preview, optional live/source URLs, and an optional featured flag
-- [ ] Featured selection: the first flagged entry, otherwise the first entry
-- [ ] The coming-soon panel's GitHub button uses the configured GitHub URL
-- [ ] Missing URLs render a disabled "Link coming soon" control, never an anchor to `#`
-- [ ] A missing preview renders an attractive placeholder, never a broken image
-- [ ] Tests: an empty list shows the panel and GitHub link and no cards; a supplied list puts the Featured Project first; a missing URL shows the disabled control with no link
+- [x] Typed projects data module, empty at launch. Each entry has a title, description, technologies, an optional preview, optional live/source URLs, and an optional featured flag
+- [x] Featured selection: the first flagged entry, otherwise the first entry
+- [x] The coming-soon panel's GitHub button uses the configured GitHub URL
+- [x] Missing URLs render a disabled "Link coming soon" control, never an anchor to `#`
+- [x] A missing preview renders an attractive placeholder, never a broken image
+- [x] Tests: an empty list shows the panel and GitHub link and no cards; a supplied list puts the Featured Project first; a missing URL shows the disabled control with no link

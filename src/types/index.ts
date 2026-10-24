@@ -91,3 +91,25 @@ export interface Skill {
   category: SkillCategory;
   icon: SkillIcon;
 }
+
+/** A real screenshot of a Project, or a clearly labelled illustration of it. */
+export interface ProjectPreview {
+  /** Root-relative path under `public/`, e.g. "/images/projects/trancash.png". */
+  src: string;
+  alt: string;
+}
+
+/** A piece of software the Owner built. Edit entries in `src/data/projects.ts`. */
+export interface Project {
+  title: string;
+  description: string;
+  /** Only technologies the Project actually uses. */
+  technologies: string[];
+  preview?: ProjectPreview;
+  /** Live demo. Leave undefined to show "Link coming soon". */
+  liveUrl?: string;
+  /** Source code. Leave undefined to show "Link coming soon". */
+  sourceUrl?: string;
+  /** Marks the Featured Project; if several are flagged the first wins, if none the first entry is featured. */
+  featured?: boolean;
+}

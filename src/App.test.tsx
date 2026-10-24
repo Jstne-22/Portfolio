@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import App from './App';
 import { educationEntries } from './data/education';
 import { siteConfig } from './data/portfolio';
+import type { Project } from './types';
 
 /** Advances fake timers in small ticks so effects that schedule follow-up timers get to run. */
 function passTime(ms: number) {
@@ -33,7 +34,7 @@ describe('Sections', () => {
       /hi, i['’]m justine/i,
       /about me/i,
       /skills/i,
-      /projects/i,
+      /^projects$/i,
       /education/i,
       /let['’]s work together/i,
     ];
@@ -327,5 +328,78 @@ describe('Skills', () => {
     render(<App />);
     const skills = document.getElementById('skills')!;
     expect(skills.textContent).not.toMatch(/%|\blevel\b|\byears?\b|beginner|intermediate|advanced|expert/i);
+  });
+});
+
+describe('Projects', () => {
+  // Test Projects live only here; the shipped list is empty.
+  const testProjects: Project[] = [
+    {
+      title: 'Weather Board',
+      description: 'A small dashboard for local forecasts.',
+      technologies: ['React', 'TypeScript'],
+      liveUrl: 'https://example.com/weather',
+      sourceUrl: 'https://github.com/example/weather',
+    },
+    {
+      title: 'Campus Planner',
+      description: 'Keeps track of classes and deadlines.',
+      technologies: ['Python', 'Flask', 'SQL'],
+      sourceUrl: 'https://github.com/example/planner',
+      featured: true,
+    },
+    {
+      title: 'Notes CLI',
+      description: 'Plain-text notes from the terminal.',
+      technologies: ['Node.js'],
+    },
+  ];
+  const projectsSection = () => document.getElementById('projects')!;
+  const projectTitles = () =>
+    within(projectsSection())
+      .getAllByRole('article')
+      .map((card) => within(card).getByRole('heading').textContent);
+
+  it('shows the coming-soon panel and a GitHub link, and no Project cards, while the list is empty', () => {
+    const githubUrl = 'https://github.com/someone-else';
+    const socials = siteConfig.socials.map((social) => (social.kind === 'github' ? { ...social, url: githubUrl } : social));
+    render(<App site={{ ...siteConfig, socials }} />);
+    const section = projectsSection();
+    expect(within(section).getByRole('heading', { name: /projects coming soon/i })).toBeInTheDocument();
+    expect(within(section).getByRole('link', { name: /see my code on github/i })).toHaveAttribute('href', githubUrl);
+    expect(within(section).queryAllByRole('article')).toHaveLength(0);
+  });
+
+  it('puts the flagged Featured Project first, followed by the others', () => {
+    render(<App projects={testProjects} />);
+    expect(within(projectsSection()).queryByRole('heading', { name: /coming soon/i })).not.toBeInTheDocument();
+    expect(projectTitles()).toEqual(['Campus Planner', 'Weather Board', 'Notes CLI']);
+    expect(within(projectsSection()).getAllByRole('article')[0]).toHaveTextContent(/featured project/i);
+  });
+
+  it('features the first Project when none is flagged', () => {
+    render(<App projects={testProjects.map(({ featured: _, ...project }) => project)} />);
+    expect(projectTitles()).toEqual(['Weather Board', 'Campus Planner', 'Notes CLI']);
+  });
+
+  it('shows a disabled “Link coming soon” control, not a link, for a missing URL', () => {
+    render(<App projects={testProjects} />);
+    const featured = within(projectsSection()).getAllByRole('article')[0];
+
+    expect(within(featured).getByRole('link', { name: /view source code/i })).toHaveAttribute(
+      'href',
+      'https://github.com/example/planner',
+    );
+    expect(within(featured).queryByRole('link', { name: /view project/i })).not.toBeInTheDocument();
+    const placeholder = within(featured).getByRole('button', { name: /view project.*link coming soon/i });
+    expect(placeholder).toBeDisabled();
+    expect(projectsSection().querySelector('a[href="#"]')).toBeNull();
+  });
+
+  it('shows a preview placeholder, never a broken image, when a Project has no preview', () => {
+    render(<App projects={testProjects} />);
+    const featured = within(projectsSection()).getAllByRole('article')[0];
+    expect(featured.querySelector('img')).toBeNull();
+    expect(featured).toHaveTextContent(/preview coming soon/i);
   });
 });
