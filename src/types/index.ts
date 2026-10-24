@@ -107,10 +107,27 @@ export interface ProjectScreenshot extends ProjectPreview {
   thumb?: string;
 }
 
+/** A titled list of what a Project can do, e.g. "For admins". */
+export interface ProjectFeatureGroup {
+  heading: string;
+  items: string[];
+}
+
+/** The longer write-up a Visitor can expand on a Project card. */
+export interface ProjectAbout {
+  overview: string;
+  featureGroups: ProjectFeatureGroup[];
+}
+
 /** A piece of software the Owner built. Edit entries in `src/data/projects.ts`. */
 export interface Project {
   title: string;
+  /** Short label shown under the title, e.g. "Digital Wallet Web App". */
+  tagline?: string;
+  /** The short version, shown on the card itself. */
   description: string;
+  /** The long version, hidden behind a "Full project details" toggle. */
+  about?: ProjectAbout;
   /** Only technologies the Project actually uses. */
   technologies: string[];
   preview?: ProjectPreview;

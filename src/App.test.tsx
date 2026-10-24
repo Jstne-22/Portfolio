@@ -433,6 +433,26 @@ describe('Projects', () => {
     expect(gallery).toHaveTextContent('3 / 3');
   });
 
+  it('keeps the short description on the card and the long write-up behind a toggle', async () => {
+    const user = userEvent.setup();
+    const about = {
+      overview: 'A longer story about forecasts.',
+      featureGroups: [{ heading: 'For users', items: ['See the weekly forecast'] }],
+    };
+    render(<App projects={[{ ...testProjects[0], tagline: 'Forecast Dashboard', about }]} />);
+    const card = within(projectsSection()).getByRole('article');
+    expect(card).toHaveTextContent('Forecast Dashboard');
+    expect(card).toHaveTextContent('A small dashboard for local forecasts.');
+
+    const toggle = within(card).getByText(/full project details/i);
+    const panel = toggle.closest('details')!;
+    expect(panel).not.toHaveAttribute('open');
+    await user.click(toggle);
+    expect(panel).toHaveAttribute('open');
+    expect(within(panel).getByRole('heading', { name: 'For users' })).toBeInTheDocument();
+    expect(panel).toHaveTextContent('See the weekly forecast');
+  });
+
   it('marks a private repository as private instead of linking to it', () => {
     render(<App projects={[{ ...testProjects[2], sourceIsPrivate: true }]} />);
     const card = within(projectsSection()).getByRole('article');

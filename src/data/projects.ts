@@ -19,11 +19,66 @@ import type { Project, ProjectScreenshot } from '../types';
 export const ownerProjects: Project[] = [
   {
     title: 'TranCash',
+    tagline: 'Digital Wallet Web App',
     description:
-      'A mobile-first e-wallet built as my mini thesis. Users can send and request money, pay by QR, deposit, ' +
-      'cash out, buy load, pay bills and ask for refunds, with email verification, an MPIN and ID verification (KYC). ' +
-      'Admins review deposits, IDs and refunds, manage users, and set fees and limits from their own console.',
-    technologies: ['Python', 'Flask', 'Supabase', 'Vercel'],
+      'A mobile-first e-wallet where users can send money, pay bills, buy load, cash out and pay merchants by QR code. ' +
+      'It has a full admin console for approving deposits, verifying IDs and handling refunds. Built with Python (Flask) ' +
+      'and PostgreSQL, deployed on Vercel, and installable as a phone app (PWA).',
+    about: {
+      overview:
+        'TranCash is a full-stack digital wallet web application inspired by e-wallets like GCash and Maya. ' +
+        'It is designed mobile-first, and users can install it on their phone like a regular app.',
+      featureGroups: [
+        {
+          heading: 'For users',
+          items: [
+            'Send and request money by username, account number, mobile number, or QR code',
+            'Pay bills, buy mobile load, cash out to a bank, and request deposits',
+            'Pay merchants by scanning a QR code, and set up your own merchant profile with a QR code',
+            'Schedule transfers for a future date',
+            'Request a refund or reversal for a transfer sent by mistake',
+            'View the full transaction history with receipts, plus real-time notifications',
+          ],
+        },
+        {
+          heading: 'Security',
+          items: [
+            'Email verification and optional 2-step login with one-time codes',
+            'A 6-digit MPIN required for every payment',
+            'Account lockout after repeated wrong passwords or MPINs',
+            'Trusted devices, and automatic sign-out after inactivity',
+            'CSRF protection, and protection against double-submitted payments',
+          ],
+        },
+        {
+          heading: 'Account levels',
+          items: [
+            'KYC identity verification: users upload a government ID',
+            'Basic vs. Fully Verified accounts, each with different transaction limits',
+          ],
+        },
+        {
+          heading: 'For admins',
+          items: [
+            'An admin console for approving deposits, reviewing ID verifications, and handling refund requests',
+            'Admin powers: adjust balances, suspend accounts, and change fees and limits',
+            'Two admin roles (Super Admin and Admin), with every action recorded in an activity log',
+          ],
+        },
+      ],
+    },
+    technologies: [
+      'Python',
+      'Flask',
+      'Jinja',
+      'PostgreSQL (Supabase)',
+      'SQLite',
+      'HTML/CSS',
+      'JavaScript',
+      'PWA',
+      'pytest',
+      'Vercel',
+    ],
     screenshots: trancashScreenshots([
       ['home', 'Home'],
       ['send-money', 'Send money'],

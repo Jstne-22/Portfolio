@@ -1,6 +1,6 @@
-import { ExternalLink, Lock, Rocket } from 'lucide-react';
+import { ChevronDown, ExternalLink, Lock, Rocket } from 'lucide-react';
 import { useState } from 'react';
-import type { Project, ProjectPreview } from '../types';
+import type { Project, ProjectAbout, ProjectPreview } from '../types';
 import LinkButton from './LinkButton';
 import ScreenshotGallery from './ScreenshotGallery';
 import Section from './Section';
@@ -69,6 +69,7 @@ function FeaturedCard({ project }: { project: Project }) {
         <p className="project-card__eyebrow">Featured Project</p>
         <ProjectDetails project={project} />
       </div>
+      {project.about && <AboutPanel about={project.about} />}
     </article>
   );
 }
@@ -77,6 +78,7 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <article className="glass-card project-card">
       <ProjectDetails project={project} />
+      {project.about && <AboutPanel about={project.about} />}
     </article>
   );
 }
@@ -85,6 +87,7 @@ function ProjectDetails({ project }: { project: Project }) {
   return (
     <>
       <h3 className="project-card__title">{project.title}</h3>
+      {project.tagline && <p className="project-card__tagline">{project.tagline}</p>}
       <p className="project-card__description">{project.description}</p>
       <ul className="tag-list" aria-label="Technologies">
         {project.technologies.map((tech) => (
@@ -110,6 +113,33 @@ function ProjectDetails({ project }: { project: Project }) {
         )}
       </div>
     </>
+  );
+}
+
+/** The Project's long write-up, collapsed until the Visitor asks for it. */
+function AboutPanel({ about }: { about: ProjectAbout }) {
+  return (
+    <details className="project-about">
+      <summary className="project-about__toggle">
+        Full project details
+        <ChevronDown className="project-about__chevron" size={18} aria-hidden="true" />
+      </summary>
+      <div className="project-about__body">
+        <p className="project-about__overview">{about.overview}</p>
+        <div className="project-about__groups">
+          {about.featureGroups.map((group) => (
+            <section key={group.heading} className="project-about__group">
+              <h4 className="project-about__heading">{group.heading}</h4>
+              <ul className="project-about__list">
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </div>
+    </details>
   );
 }
 
