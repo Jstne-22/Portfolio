@@ -12,13 +12,13 @@ This ticket sets up:
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] `npm run dev`, `npm run build` and `npm test` all work
-- [ ] Palette defined as CSS variables; body background `#050510`
-- [ ] Site config holds full name, display name, initials, title, intro, location, email `dump9825@gmail.com`, GitHub `https://github.com/Jstne-22`, and an optional profile image (absent); no LinkedIn
-- [ ] Six Sections (Home, About, Skills, Projects, Education, Contact) render with headings and in-page anchors
-- [ ] Sidebar links scroll smoothly (instantly under reduced motion), and the active Section is highlighted via a single Intersection Observer
-- [ ] Sidebar icon-only links have accessible names
-- [ ] Tests: all six Section headings render; each nav link targets its Section; email and GitHub links use the configured values; no LinkedIn link
-- [ ] `git init` with a `.gitignore` (node_modules, dist) and a first local commit; no push
+- [x] `npm run dev`, `npm run build` and `npm test` all work
+- [x] Palette defined as CSS variables; body background `#050510`
+- [x] Site config holds full name, display name, initials, title, intro, location, email `dump9825@gmail.com`, GitHub `https://github.com/Jstne-22`, and an optional profile image (absent); no LinkedIn
+- [x] Six Sections (Home, About, Skills, Projects, Education, Contact) render with headings and in-page anchors
+- [x] Sidebar links scroll smoothly (instantly under reduced motion), and the active Section is highlighted via a single Intersection Observer
+- [x] Sidebar icon-only links have accessible names
+- [x] Tests: all six Section headings render; each nav link targets its Section; email and GitHub links use the configured values; no LinkedIn link
+- [x] `git init` with a `.gitignore` (node_modules, dist) and a first local commit; no push
