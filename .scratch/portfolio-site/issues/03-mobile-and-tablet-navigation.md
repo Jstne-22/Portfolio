@@ -4,11 +4,11 @@
 
 **Blocked by:** 01 (Project skeleton with working sidebar navigation)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Sidebar hidden and top bar shown below ~1024px
-- [ ] Hamburger has an accessible name and reflects its expanded/collapsed state
-- [ ] Menu closes after a Section is chosen, and on Escape
-- [ ] Scroll offset keeps headings clear of the top bar
-- [ ] Uses the same Section list and active highlighting as the sidebar
-- [ ] Tests: the hamburger opens the menu; choosing a Section closes it
+- [x] Sidebar hidden and top bar shown below ~1024px
+- [x] Hamburger has an accessible name and reflects its expanded/collapsed state
+- [x] Menu closes after a Section is chosen, and on Escape
+- [x] Scroll offset keeps headings clear of the top bar
+- [x] Uses the same Section list and active highlighting as the sidebar
+- [x] Tests: the hamburger opens the menu; choosing a Section closes it

@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
+import userEvent from '@testing-library/user-event';
 import App from './App';
 import { siteConfig } from './data/portfolio';
 
@@ -154,5 +155,67 @@ describe('Navigation', () => {
       'mailto:dump9825@gmail.com',
     );
     expect(screen.queryByRole('link', { name: /linkedin/i })).not.toBeInTheDocument();
+  });
+});
+
+describe('Phone and tablet menu', () => {
+  it('opens from the hamburger and closes after a Section is chosen', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    const hamburger = screen.getByRole('button', { name: /menu/i });
+    expect(hamburger).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.queryByRole('navigation', { name: /menu/i })).not.toBeInTheDocument();
+
+    await user.click(hamburger);
+    expect(hamburger).toHaveAttribute('aria-expanded', 'true');
+    const menu = screen.getByRole('navigation', { name: /menu/i });
+    expect(within(menu).getByRole('link', { name: 'Projects' })).toHaveAttribute('href', '#projects');
+
+    await user.click(within(menu).getByRole('link', { name: 'About' }));
+    expect(hamburger).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.queryByRole('navigation', { name: /menu/i })).not.toBeInTheDocument();
+  });
+
+  it('closes on Escape and returns focus to the hamburger', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    const hamburger = screen.getByRole('button', { name: /menu/i });
+
+    await user.click(hamburger);
+    await user.tab();
+    expect(within(screen.getByRole('navigation', { name: /menu/i })).getByRole('link', { name: 'Home' })).toHaveFocus();
+
+    await user.keyboard('{Escape}');
+    expect(screen.queryByRole('navigation', { name: /menu/i })).not.toBeInTheDocument();
+    expect(hamburger).toHaveFocus();
+  });
+
+  it('closes when focus or a tap moves outside it', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    const hamburger = screen.getByRole('button', { name: /menu/i });
+
+    await user.click(hamburger);
+    const menu = screen.getByRole('navigation', { name: /menu/i });
+    within(menu).getByRole('link', { name: 'Contact' }).focus();
+    await user.tab();
+    expect(hamburger).toHaveAttribute('aria-expanded', 'false');
+
+    await user.click(hamburger);
+    await user.click(screen.getByRole('heading', { level: 1 }));
+    expect(hamburger).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('lists the same Sections as the sidebar, with the same current Section', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(screen.getByRole('button', { name: /menu/i }));
+    const menu = screen.getByRole('navigation', { name: /menu/i });
+
+    const labels = within(menu)
+      .getAllByRole('link')
+      .map((link) => link.textContent);
+    expect(labels).toEqual(['Home', 'About', 'Skills', 'Projects', 'Education', 'Contact']);
+    expect(within(menu).getByRole('link', { name: 'Home' })).toHaveAttribute('aria-current', 'location');
   });
 });

@@ -1,4 +1,30 @@
-/* Breakpoint overrides. Mobile/tablet navigation is added by the navigation ticket. */
+/* Breakpoint overrides. */
+
+/* Phone/tablet navigation: the top bar replaces the sidebar below 1024px. */
+@media (max-width: 1023px) {
+  .sidebar {
+    display: none;
+  }
+
+  .topbar {
+    display: block;
+  }
+
+  .main {
+    margin-left: 0;
+    padding-top: var(--topbar-height);
+  }
+
+  /* Keep headings clear of the fixed top bar after in-page navigation. */
+  .section {
+    scroll-margin-top: calc(var(--topbar-height) + 16px);
+  }
+
+  .hero {
+    scroll-margin-top: var(--topbar-height);
+    min-height: calc(100vh - var(--topbar-height));
+  }
+}
 
 /* Hero: below ~1100px the visual column is too narrow for the card to sit beside the
    emblem, so the card drops below it, overlapping only the bottom of the rings. */
