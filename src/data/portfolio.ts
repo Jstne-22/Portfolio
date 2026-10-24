@@ -13,6 +13,8 @@ export const siteConfig: SiteConfig = {
   logoLetter: 'J',
   logoSuffix: 'DEV',
   title: 'Computer Science Student & Aspiring Developer',
+  roles: ['Aspiring Developer', 'Web Development Enthusiast', 'Computer Science Student'],
+  focus: 'Web Development',
   intro:
     'I’m a Computer Science student and aspiring developer who enjoys turning ideas into clean, responsive web experiences — learning something new with every project I build.',
   location: 'Calbayog City, Philippines',

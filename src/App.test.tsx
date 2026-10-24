@@ -1,6 +1,27 @@
-import { render, screen, within } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import App from './App';
+import { siteConfig } from './data/portfolio';
+
+/** Advances fake timers in small ticks so effects that schedule follow-up timers get to run. */
+function passTime(ms: number) {
+  for (let elapsed = 0; elapsed < ms; elapsed += 50) {
+    act(() => vi.advanceTimersByTime(50));
+  }
+}
+
+function reducedMotionQuery(query: string): MediaQueryList {
+  return {
+    matches: query.includes('prefers-reduced-motion: reduce'),
+    media: query,
+    onchange: null,
+    addListener: () => {},
+    removeListener: () => {},
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    dispatchEvent: () => false,
+  };
+}
 
 describe('Sections', () => {
   it('shows all six Sections, each with a heading', () => {
@@ -16,6 +37,81 @@ describe('Sections', () => {
     ];
     for (const name of expectedHeadings) {
       expect(screen.getByRole('heading', { name })).toBeInTheDocument();
+    }
+  });
+});
+
+describe('Hero', () => {
+  it('shows the Owner’s display name in the page’s only h1', () => {
+    render(<App />);
+    const h1s = screen.getAllByRole('heading', { level: 1 });
+    expect(h1s).toHaveLength(1);
+    expect(h1s[0]).toHaveTextContent(/hi, i['’]m justine/i);
+  });
+
+  it('sends Visitors to Projects and Contact from its buttons', () => {
+    render(<App />);
+    const hero = document.getElementById('home')!;
+    expect(within(hero).getByRole('link', { name: /view my projects/i })).toHaveAttribute('href', '#projects');
+    expect(within(hero).getByRole('link', { name: /contact me/i })).toHaveAttribute('href', '#contact');
+  });
+
+  it('describes the Owner in the code card using the site config', () => {
+    render(<App site={{ ...siteConfig, displayName: 'Robin', focus: 'Game Development', location: 'Tacloban City' }} />);
+    const card = screen.getByRole('figure', { name: /code snippet/i });
+    expect(card).toHaveTextContent('name: "Robin"');
+    expect(card).toHaveTextContent('focus: "Game Development"');
+    expect(card).toHaveTextContent('location: "Tacloban City"');
+  });
+
+  it('shows the glowing emblem, and no image, when no profile image is configured', () => {
+    render(<App />);
+    const hero = document.getElementById('home')!;
+    expect(within(hero).queryByRole('img', { name: /portrait/i })).not.toBeInTheDocument();
+    expect(hero.querySelector('img')).toBeNull();
+  });
+
+  it('shows the profile image when one is configured, and falls back to the emblem if it fails to load', () => {
+    render(<App site={{ ...siteConfig, profileImage: '/images/profile.jpg' }} />);
+    const photo = screen.getByRole('img', { name: /portrait of justine v\. piamonte/i });
+    expect(photo).toHaveAttribute('src', '/images/profile.jpg');
+
+    fireEvent.error(photo);
+    expect(screen.queryByRole('img', { name: /portrait/i })).not.toBeInTheDocument();
+  });
+
+  it('types the tagline slowly', () => {
+    vi.useFakeTimers();
+    try {
+      render(<App />);
+      const hero = document.getElementById('home')!;
+      const before = hero.textContent!;
+      const fullPhraseCount = (text: string) => text.split('Aspiring Developer').length;
+      passTime(1000);
+      expect(hero.textContent).not.toBe(before);
+      // Slow enough to read: one second in, the first phrase is still being typed.
+      expect(fullPhraseCount(hero.textContent!)).toBe(fullPhraseCount(before));
+      passTime(2000);
+      expect(fullPhraseCount(hero.textContent!)).toBe(fullPhraseCount(before) + 1);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('shows every tagline phrase as still text under reduced motion', () => {
+    vi.useFakeTimers();
+    const matchMedia = vi.spyOn(window, 'matchMedia').mockImplementation(reducedMotionQuery);
+    try {
+      render(<App />);
+      const hero = document.getElementById('home')!;
+      expect(hero).toHaveTextContent('Aspiring Developer · Web Development Enthusiast · Computer Science Student');
+
+      const before = hero.textContent;
+      passTime(5000);
+      expect(hero.textContent).toBe(before);
+    } finally {
+      matchMedia.mockRestore();
+      vi.useRealTimers();
     }
   });
 });

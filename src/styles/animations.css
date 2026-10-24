@@ -1,4 +1,52 @@
-/* Keyframes and motion utilities (added by later tickets). All motion is disabled under reduced motion. */
+/* Keyframes and motion utilities. All motion is disabled under reduced motion. */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(40px, -30px) scale(1.08);
+  }
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-glow {
+  50% {
+    text-shadow:
+      0 0 22px rgba(255, 45, 149, 0.95),
+      0 0 52px rgba(139, 92, 246, 0.7);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,

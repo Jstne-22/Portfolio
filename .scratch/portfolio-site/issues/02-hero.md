@@ -14,13 +14,13 @@ Also includes the hexagon "J" SVG favicon.
 
 **Blocked by:** 01 (Project skeleton with working sidebar navigation)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Single h1 containing the Owner's display name
-- [ ] Typing tagline is slow and readable; shows static text under reduced motion
-- [ ] "View My Projects" scrolls to Projects; "Contact Me" scrolls to Contact
-- [ ] Emblem shown when no profile image is configured; never a broken image
-- [ ] Code card content comes from the site config
-- [ ] Background effects are CSS-only (or a canvas paused when off-screen) with a small fixed particle count
-- [ ] Favicon is the hexagon "J" SVG with a root-relative path
-- [ ] Tests: heading shows the display name; both buttons target the right Sections
+- [x] Single h1 containing the Owner's display name
+- [x] Typing tagline is slow and readable; shows static text under reduced motion
+- [x] "View My Projects" scrolls to Projects; "Contact Me" scrolls to Contact
+- [x] Emblem shown when no profile image is configured; never a broken image
+- [x] Code card content comes from the site config
+- [x] Background effects are CSS-only (or a canvas paused when off-screen) with a small fixed particle count
+- [x] Favicon is the hexagon "J" SVG with a root-relative path
+- [x] Tests: heading shows the display name; both buttons target the right Sections

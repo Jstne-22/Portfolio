@@ -24,6 +24,10 @@ export interface SiteConfig {
   /** Small text under the logo name, e.g. "DEV". */
   logoSuffix: string;
   title: string;
+  /** Rotating hero tagline, typed one phrase at a time. */
+  roles: string[];
+  /** What the Owner focuses on, e.g. "Web Development". Shown in the hero code card. */
+  focus: string;
   intro: string;
   location: string;
   email: string;
