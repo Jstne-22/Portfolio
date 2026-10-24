@@ -903,6 +903,83 @@ a.contact__value:hover {
   text-align: center;
 }
 
+/* ---------- Page chrome: scroll progress, back to top, cursor glow ---------- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  height: 3px;
+  background: var(--gradient-neon);
+  box-shadow: 0 0 10px rgba(255, 45, 149, 0.6);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid var(--neon-pink);
+  background: rgba(10, 10, 26, 0.85);
+  color: var(--text-primary);
+  box-shadow: var(--glow-pink);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  /* Hidden until the Visitor scrolls down; stays in the DOM (aria-hidden, untabbable) meanwhile. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.back-to-top--visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.back-to-top--visible:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 26px rgba(255, 45, 149, 0.6);
+}
+
+.hero__title:focus {
+  outline: none;
+}
+
+.back-to-top:focus-visible {
+  outline-offset: 4px;
+  border-radius: 50%;
+}
+
+/* Drawn behind the content, so it tints the background without washing out text. */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 420px;
+  height: 420px;
+  margin: -210px 0 0 -210px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.16), rgba(255, 45, 149, 0.06) 45%, transparent 70%);
+  transform: translate3d(var(--cursor-x, -1000px), var(--cursor-y, -1000px), 0);
+  pointer-events: none;
+}
+
 /* ---------- Education timeline ---------- */
 .timeline {
   position: relative;
@@ -1158,6 +1235,8 @@ a.contact__value:hover {
   gap: clamp(24px, 4vw, 56px);
   padding: 64px 0 48px;
   scroll-margin-top: 0;
+  /* The orbit rings and their glow may extend past the column; never let them cause sideways scrolling. */
+  overflow-x: clip;
 }
 
 .hero__eyebrow {
@@ -1237,6 +1316,9 @@ a.contact__value:hover {
   justify-items: start;
   padding: 24px 0 0 6%;
   min-height: 540px;
+  /* Gentle parallax: the pointer variables are only set on wide viewports with a mouse (see CursorGlow). */
+  transform: translate3d(calc(var(--pointer-x, 0) * -14px), calc(var(--pointer-y, 0) * -10px), 0);
+  transition: transform 0.4s ease-out;
 }
 
 /* ---------- Orbit emblem ---------- */

@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react';
+import { useRef, type ReactNode } from 'react';
+import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 import type { SectionId } from '../types';
 
 interface SectionProps {
@@ -10,9 +11,11 @@ interface SectionProps {
 }
 
 export default function Section({ id, eyebrow, title, children }: SectionProps) {
+  const ref = useRef<HTMLElement>(null);
+  useRevealOnScroll(ref);
   const headingId = `${id}-heading`;
   return (
-    <section id={id} className="section" aria-labelledby={headingId}>
+    <section ref={ref} id={id} className="section" aria-labelledby={headingId}>
       <p className="section__eyebrow">{eyebrow}</p>
       <h2 id={headingId} className="section__title">
         {title}

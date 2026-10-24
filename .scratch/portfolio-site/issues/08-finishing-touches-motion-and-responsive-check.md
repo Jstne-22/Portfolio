@@ -10,12 +10,12 @@ Then the site is checked and fixed so it respects reduced motion and looks right
 
 **Blocked by:** 02, 03, 04, 05, 06, 07
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] The back-to-top button appears after scrolling, has an accessible name, and returns to Home
-- [ ] The scroll-progress bar tracks progress down the page
-- [ ] Cursor glow and parallax appear only on wide viewports with a mouse, and are off under reduced motion
-- [ ] Reveal animations run once; all content is visible even if animations never run
-- [ ] Under reduced motion, orbits, floating, typing, parallax and reveals stop or become simple fades
-- [ ] Browser check at 375/768/1024/1440px: no horizontal scroll, no overlap, no console errors, no broken assets; fix what's found
-- [ ] Visible focus states throughout; text contrast is adequate
+- [x] The back-to-top button appears after scrolling, has an accessible name, and returns to Home
+- [x] The scroll-progress bar tracks progress down the page
+- [x] Cursor glow and parallax appear only on wide viewports with a mouse, and are off under reduced motion
+- [x] Reveal animations run once; all content is visible even if animations never run
+- [x] Under reduced motion, orbits, floating, typing, parallax and reveals stop or become simple fades
+- [x] Browser check at 375/768/1024/1440px: no horizontal scroll, no overlap, no console errors, no broken assets; fix what's found
+- [x] Visible focus states throughout; text contrast is adequate

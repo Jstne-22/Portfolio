@@ -1,5 +1,5 @@
-import { act, fireEvent, render, screen, within } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 import { educationEntries } from './data/education';
@@ -507,5 +507,34 @@ describe('Footer', () => {
     } finally {
       vi.useRealTimers();
     }
+  });
+});
+
+describe('Back to top', () => {
+  const originalScrollY = Object.getOwnPropertyDescriptor(window, 'scrollY');
+  afterEach(() => {
+    if (originalScrollY) Object.defineProperty(window, 'scrollY', originalScrollY);
+    else delete (window as { scrollY?: number }).scrollY;
+  });
+
+  const scrollTo = (y: number) => {
+    Object.defineProperty(window, 'scrollY', { value: y, configurable: true });
+    act(() => {
+      window.dispatchEvent(new Event('scroll'));
+    });
+  };
+
+  it('appears after scrolling down and returns to Home', async () => {
+    render(<App />);
+    expect(screen.queryByRole('link', { name: 'Back to top' })).not.toBeInTheDocument();
+
+    scrollTo(900);
+    const backToTop = await screen.findByRole('link', { name: 'Back to top' });
+    expect(backToTop).toHaveAttribute('href', '#home');
+    fireEvent.click(backToTop);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveFocus();
+
+    scrollTo(0);
+    await waitFor(() => expect(screen.queryByRole('link', { name: 'Back to top' })).not.toBeInTheDocument());
   });
 });

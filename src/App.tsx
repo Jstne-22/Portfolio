@@ -1,11 +1,14 @@
 import About from './components/About';
 import Backdrop from './components/Backdrop';
+import BackToTop from './components/BackToTop';
 import Contact from './components/Contact';
+import CursorGlow from './components/CursorGlow';
 import Education from './components/Education';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
 import Navbar from './components/Navbar';
 import Projects from './components/Projects';
+import ScrollProgress from './components/ScrollProgress';
 import Skills from './components/Skills';
 import { educationEntries } from './data/education';
 import { navSections, siteConfig, socialUrl } from './data/portfolio';
@@ -33,6 +36,8 @@ export default function App({
         Skip to content
       </a>
       <Backdrop />
+      <CursorGlow />
+      <ScrollProgress />
       <Navbar site={site} sections={sections} />
       <main id="main" className="main">
         <Hero site={site} />
@@ -43,6 +48,7 @@ export default function App({
         <Contact site={site} />
       </main>
       <Footer site={site} />
+      <BackToTop />
     </div>
   );
 }

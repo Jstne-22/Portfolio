@@ -13,7 +13,8 @@ export default function Hero({ site }: HeroProps) {
     <section id="home" className="hero" aria-labelledby="home-heading">
       <div className="hero__text">
         <p className="hero__eyebrow">Welcome to my world</p>
-        <h1 id="home-heading" className="hero__title">
+        {/* Focusable from script so "Back to top" can return keyboard focus here. */}
+        <h1 id="home-heading" className="hero__title" tabIndex={-1}>
           Hi, I’m <span className="text-gradient">{site.displayName}</span>
         </h1>
         <p className="hero__headline">

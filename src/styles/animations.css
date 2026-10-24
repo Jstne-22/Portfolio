@@ -57,3 +57,11 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Printing never waits for scroll reveals. */
+@media print {
+  .section {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
