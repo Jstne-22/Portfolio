@@ -52,21 +52,44 @@
 }
 
 @media (max-width: 640px) {
-  /* Gallery arrows float over the screenshot so the viewer can use the card's full width. */
-  .gallery__nav {
-    position: absolute;
-    top: 50%;
-    z-index: 1;
-    transform: translateY(-50%);
-    background: rgba(10, 10, 10, 0.75);
+  /* The Featured card drops its own box so the screenshots and text use the Section's full width,
+     and its title comes before the gallery. Doubled class to beat the phone .glass-card padding below. */
+  .glass-card.project-card--featured {
+    gap: 16px;
+    padding: 0;
+    border: none;
+    background: none;
   }
 
-  .gallery__nav:first-child {
-    left: 4px;
+  .project-card--featured:hover,
+  .project-card--featured:focus-within {
+    transform: none;
+    box-shadow: none;
   }
 
-  .gallery__nav:last-child {
-    right: 4px;
+  .project-card--featured .project-card__body {
+    display: contents;
+  }
+
+  .project-card--featured .project-card__header {
+    order: -1;
+  }
+
+  .tag-list--collapsible > .tag:nth-child(n + 5) {
+    display: none;
+  }
+
+  .tag-list--collapsible .tag-list__more {
+    display: block;
+  }
+
+  .project-card__links {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .project-card__private {
+    justify-content: center;
   }
 
   .back-to-top {
@@ -104,6 +127,11 @@
 
   .glass-card {
     padding: 18px;
+  }
+
+  /* Narrower Section padding leaves room for content inside its cards. */
+  .section {
+    padding: 24px 16px;
   }
 
   .highlight {

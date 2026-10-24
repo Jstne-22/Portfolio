@@ -5,6 +5,7 @@ import App from './App';
 import { educationEntries } from './data/education';
 import { navigateTo } from './lib/navigate';
 import { siteConfig } from './data/portfolio';
+import { PHONE_QUERY } from './hooks/useMediaQuery';
 import type { Project } from './types';
 
 // Opening the Visitor's email app is a real browser navigation, which jsdom can't perform or observe.
@@ -453,10 +454,65 @@ describe('Projects', () => {
     expect(panel).toHaveTextContent('See the weekly forecast');
   });
 
+  describe('on a phone', () => {
+    const desktopMatchMedia = window.matchMedia;
+    beforeEach(() => {
+      window.matchMedia = (query: string) => ({ ...desktopMatchMedia(query), matches: query === PHONE_QUERY });
+    });
+    afterEach(() => {
+      window.matchMedia = desktopMatchMedia;
+    });
+
+    const phoneProject: Project = {
+      ...testProjects[0],
+      technologies: ['Python', 'Flask', 'PostgreSQL', 'PWA', 'Jinja', 'pytest'],
+      screenshots: ['Home', 'Send money'].map((caption) => ({ src: `/shots/${caption}.webp`, alt: `${caption} screen`, caption })),
+      about: {
+        overview: 'A longer story about forecasts.',
+        featureGroups: [
+          { heading: 'For users', items: ['See the weekly forecast'] },
+          { heading: 'For admins', items: ['Edit stations'] },
+        ],
+      },
+    };
+
+    it('shows the screenshots as a swipe strip without arrows or thumbnails', () => {
+      render(<App projects={[phoneProject]} />);
+      const gallery = within(projectsSection()).getByRole('region', { name: /weather board screenshots/i });
+      expect(within(gallery).getAllByRole('img').map((img) => img.getAttribute('alt'))).toEqual([
+        'Home screen',
+        'Send money screen',
+      ]);
+      expect(within(gallery).queryByRole('button')).not.toBeInTheDocument();
+      expect(gallery).toHaveTextContent('1 / 2');
+    });
+
+    it('offers the rest of the technologies behind a “+N more” button', async () => {
+      const user = userEvent.setup();
+      render(<App projects={[phoneProject]} />);
+      const tags = within(projectsSection()).getByRole('list', { name: 'Technologies' });
+      await user.click(within(tags).getByRole('button', { name: '+2 more' }));
+      expect(within(tags).queryByRole('button')).not.toBeInTheDocument();
+    });
+
+    it('gives each feature group its own closed accordion', async () => {
+      const user = userEvent.setup();
+      render(<App projects={[phoneProject]} />);
+      const card = within(projectsSection()).getByRole('article');
+      expect(within(card).queryByText(/full project details/i)).not.toBeInTheDocument();
+      const users = within(card).getByText('For users').closest('details')!;
+      const admins = within(card).getByText('For admins').closest('details')!;
+      expect(users).not.toHaveAttribute('open');
+      await user.click(within(users).getByText('For users'));
+      expect(users).toHaveAttribute('open');
+      expect(admins).not.toHaveAttribute('open');
+    });
+  });
+
   it('marks a private repository as private instead of linking to it', () => {
     render(<App projects={[{ ...testProjects[2], sourceIsPrivate: true }]} />);
     const card = within(projectsSection()).getByRole('article');
-    expect(card).toHaveTextContent(/private repository/i);
+    expect(card).toHaveTextContent(/source code is private/i);
     expect(within(card).queryByRole('link', { name: /source code/i })).not.toBeInTheDocument();
     expect(within(card).queryByRole('button', { name: /source code/i })).not.toBeInTheDocument();
   });

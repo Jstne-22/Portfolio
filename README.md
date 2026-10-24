@@ -111,7 +111,7 @@ export const ownerProjects: Project[] = [
 - **Preview:** put a real screenshot in `public/images/projects/`. Without one, a "Preview coming soon" illustration is shown — never a broken image.
 - **Screenshot gallery:** give a Project a `screenshots` list (each with `src`, `alt`, `caption` and an optional small `thumb`) to show a browsable gallery on the Featured card instead of a single `preview`. TranCash's screens live in `public/images/projects/trancash/`.
 - **Missing links:** leave `liveUrl` or `sourceUrl` out and the button shows as a disabled "Link coming soon".
-- **Private repository:** set `sourceIsPrivate: true` to show an inert "Private repository" label instead of a source link.
+- **Private repository:** set `sourceIsPrivate: true` to show a "Source code is private" note instead of a source link.
 - **Featured Project:** the first entry with `featured: true` is shown large at the top. If none is flagged, the first entry is featured.
 
 ## 8. Push to GitHub

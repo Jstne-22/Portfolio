@@ -67,15 +67,16 @@ export const ownerProjects: Project[] = [
         },
       ],
     },
+    // The first four are the ones phones show before "+N more".
     technologies: [
       'Python',
       'Flask',
-      'Jinja',
       'PostgreSQL (Supabase)',
+      'PWA',
+      'Jinja',
       'SQLite',
       'HTML/CSS',
       'JavaScript',
-      'PWA',
       'pytest',
       'Vercel',
     ],

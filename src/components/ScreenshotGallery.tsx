@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent, type UIEvent } from 'react';
+import { PHONE_QUERY, useMediaQuery } from '../hooks/useMediaQuery';
 import type { ProjectScreenshot } from '../types';
 
 interface ScreenshotGalleryProps {
@@ -7,8 +8,14 @@ interface ScreenshotGalleryProps {
   screenshots: ProjectScreenshot[];
 }
 
-/** A phone-sized viewer for one screen at a time, with previous/next buttons and a thumbnail strip. */
-export default function ScreenshotGallery({ title, screenshots }: ScreenshotGalleryProps) {
+/** A Project's screens: a swipeable strip on phones, a viewer with buttons and thumbnails elsewhere. */
+export default function ScreenshotGallery(props: ScreenshotGalleryProps) {
+  const phone = useMediaQuery(PHONE_QUERY);
+  return phone ? <SwipeGallery {...props} /> : <ViewerGallery {...props} />;
+}
+
+/** One screen at a time in a phone-sized viewer, with previous/next buttons and a thumbnail strip. */
+function ViewerGallery({ title, screenshots }: ScreenshotGalleryProps) {
   const [index, setIndex] = useState(0);
   const viewerRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<HTMLUListElement>(null);
@@ -69,6 +76,42 @@ export default function ScreenshotGallery({ title, screenshots }: ScreenshotGall
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+/** Screens side by side in a native swipe strip; the next one peeks in so Visitors see they can swipe. */
+function SwipeGallery({ title, screenshots }: ScreenshotGalleryProps) {
+  const [index, setIndex] = useState(0);
+
+  const onScroll = (event: UIEvent<HTMLUListElement>) => {
+    const track = event.currentTarget;
+    const slides = Array.from(track.children) as HTMLElement[];
+    // The current screen is the one whose left edge is closest to the track's.
+    let nearest = 0;
+    slides.forEach((slide, i) => {
+      if (Math.abs(slide.offsetLeft - track.scrollLeft) < Math.abs(slides[nearest].offsetLeft - track.scrollLeft)) {
+        nearest = i;
+      }
+    });
+    setIndex(nearest);
+  };
+
+  return (
+    <div className="gallery gallery--swipe" role="region" aria-label={`${title} screenshots`}>
+      <ul className="gallery__track" onScroll={onScroll} tabIndex={0} aria-label="Swipe to see more screens">
+        {screenshots.map((shot, i) => (
+          <li key={shot.src} className="gallery__slide">
+            <img src={shot.src} alt={shot.alt} loading={i < 2 ? 'eager' : 'lazy'} />
+          </li>
+        ))}
+      </ul>
+      <p className="gallery__caption" aria-live="polite">
+        <span className="gallery__count">
+          {index + 1} / {screenshots.length}
+        </span>
+        {screenshots[index].caption}
+      </p>
     </div>
   );
 }

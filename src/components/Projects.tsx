@@ -1,6 +1,7 @@
 import { ChevronDown, ExternalLink, Lock, Rocket } from 'lucide-react';
 import { useState } from 'react';
 import type { Project, ProjectAbout, ProjectPreview } from '../types';
+import { PHONE_QUERY, useMediaQuery } from '../hooks/useMediaQuery';
 import LinkButton from './LinkButton';
 import ScreenshotGallery from './ScreenshotGallery';
 import Section from './Section';
@@ -66,8 +67,7 @@ function FeaturedCard({ project }: { project: Project }) {
         <Preview preview={project.preview} />
       )}
       <div className="project-card__body">
-        <p className="project-card__eyebrow">Featured Project</p>
-        <ProjectDetails project={project} />
+        <ProjectDetails project={project} eyebrow="Featured Project" />
       </div>
       {project.about && <AboutPanel about={project.about} />}
     </article>
@@ -83,18 +83,36 @@ function ProjectCard({ project }: { project: Project }) {
   );
 }
 
-function ProjectDetails({ project }: { project: Project }) {
+/** Tags shown before "+N more" on phones. */
+const PHONE_TAG_LIMIT = 4;
+
+function ProjectDetails({ project, eyebrow }: { project: Project; eyebrow?: string }) {
+  const [allTags, setAllTags] = useState(false);
+  const hiddenTags = project.technologies.length - PHONE_TAG_LIMIT;
+  const collapsible = hiddenTags > 0 && !allTags;
+
   return (
     <>
-      <h3 className="project-card__title">{project.title}</h3>
-      {project.tagline && <p className="project-card__tagline">{project.tagline}</p>}
+      {/* Its own block so phones can lift it above the gallery. */}
+      <header className="project-card__header">
+        {eyebrow && <p className="project-card__eyebrow">{eyebrow}</p>}
+        <h3 className="project-card__title">{project.title}</h3>
+        {project.tagline && <p className="project-card__tagline">{project.tagline}</p>}
+      </header>
       <p className="project-card__description">{project.description}</p>
-      <ul className="tag-list" aria-label="Technologies">
+      <ul className={`tag-list${collapsible ? ' tag-list--collapsible' : ''}`} aria-label="Technologies">
         {project.technologies.map((tech) => (
           <li key={tech} className="tag">
             {tech}
           </li>
         ))}
+        {collapsible && (
+          <li className="tag-list__more">
+            <button type="button" className="tag tag--more" onClick={() => setAllTags(true)}>
+              +{hiddenTags} more
+            </button>
+          </li>
+        )}
       </ul>
       <div className="project-card__links">
         <LinkButton
@@ -104,10 +122,10 @@ function ProjectDetails({ project }: { project: Project }) {
           variant="primary"
         />
         {project.sourceIsPrivate ? (
-          <span className="btn btn--placeholder" title="The source code is in a private GitHub repository">
-            <Lock size={16} aria-hidden="true" />
-            Private repository
-          </span>
+          <p className="project-card__private">
+            <Lock size={14} aria-hidden="true" />
+            Source code is private
+          </p>
         ) : (
           <LinkButton href={project.sourceUrl} label="View Source Code" icon={<SocialIcon kind="github" size={16} />} />
         )}
@@ -116,8 +134,30 @@ function ProjectDetails({ project }: { project: Project }) {
   );
 }
 
-/** The Project's long write-up, collapsed until the Visitor asks for it. */
+/**
+ * The Project's long write-up. Wide screens get one "Full project details" toggle over a grid of groups;
+ * phones get the overview with each group as its own closed accordion, so nothing long opens at once.
+ */
 function AboutPanel({ about }: { about: ProjectAbout }) {
+  const phone = useMediaQuery(PHONE_QUERY);
+
+  if (phone) {
+    return (
+      <div className="project-about project-about--accordion">
+        <p className="project-about__overview">{about.overview}</p>
+        {about.featureGroups.map((group) => (
+          <details key={group.heading} className="project-about__group">
+            <summary className="project-about__toggle">
+              {group.heading}
+              <ChevronDown className="project-about__chevron" size={18} aria-hidden="true" />
+            </summary>
+            <FeatureList items={group.items} />
+          </details>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <details className="project-about">
       <summary className="project-about__toggle">
@@ -130,16 +170,22 @@ function AboutPanel({ about }: { about: ProjectAbout }) {
           {about.featureGroups.map((group) => (
             <section key={group.heading} className="project-about__group">
               <h4 className="project-about__heading">{group.heading}</h4>
-              <ul className="project-about__list">
-                {group.items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+              <FeatureList items={group.items} />
             </section>
           ))}
         </div>
       </div>
     </details>
+  );
+}
+
+function FeatureList({ items }: { items: string[] }) {
+  return (
+    <ul className="project-about__list">
+      {items.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
   );
 }
 
